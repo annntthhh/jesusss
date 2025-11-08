@@ -62,3 +62,18 @@
 
     <script>
         const openBtn = document.getElementById('open-envelope');
+        const envelope = document.querySelector('.envelope');
+        const music = document.getElementById('background-music');
+
+        openBtn.addEventListener('click', function() {
+            envelope.classList.add('open');
+            this.style.display = 'none'; // Oculta el botón
+
+            // La música inicia aquí
+            music.play().catch(error => {
+                console.log("Error al reproducir música, el navegador lo bloqueó hasta interacción del usuario.", error);
+            });
+        });
+    </script>
+</body>
+</html>
