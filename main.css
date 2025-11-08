@@ -1,4 +1,4 @@
-/* --- NUEVO DISEÑO: AZUL NOCHE Y MAGIA ROMÁNTICA --- */
+/* --- DISEÑO FINAL: AZUL NOCHE, MAGIA Y CORAZONES AZULES --- */
 
 :root{
   --bg: #0a192f;            /* Azul Noche Profundo para el fondo */
@@ -22,11 +22,11 @@ body{
   align-items:center;
   justify-content:center;
   padding:32px;
-  position:relative; /* Para los efectos de luz */
-  overflow: hidden; /* Oculta barras de desplazamiento por los efectos flotantes */
+  position:relative; 
+  overflow: hidden;
 }
 
-/* EFECTO DE LUZ AZUL TENUE EN EL FONDO */
+/* EFECTO DE LUZ AZUL TENUE Y PARPADEO */
 body::before {
     content: '';
     position: fixed;
@@ -34,8 +34,8 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    box-shadow: 0 0 150px 80px rgba(100, 255, 218, 0.15) inset; /* Luz de fondo tenue */
-    animation: pulse 4s infinite alternate; /* Parpadeo suave */
+    box-shadow: 0 0 150px 80px rgba(100, 255, 218, 0.15) inset;
+    animation: pulse 4s infinite alternate; 
     pointer-events: none;
     z-index: -1;
 }
@@ -43,7 +43,7 @@ body::before {
 /* contenedor */
 .stage{ text-align:center; max-width:520px; width:100%; z-index: 10; }
 
-/* SOBRE: estructura más realista */
+/* SOBRE: estructura */
 .envelope{
   position:relative;
   width:380px;
@@ -52,13 +52,13 @@ body::before {
   margin:0 auto 12px;
 }
 
-/* solapa superior (triangular, más corta para parecer papel) */
+/* solapa superior (más realista) */
 .envelope .flap{
   position:absolute;
   left:20px;
   right:20px;
   top:0;
-  height:100px; /* Altura más baja para solapa de papel */
+  height:100px; 
   background: linear-gradient(180deg, #34495e, var(--envelope));
   border-radius:10px;
   transform-origin:top center;
@@ -66,15 +66,15 @@ body::before {
   transition:transform 700ms cubic-bezier(.2,.9,.2,1);
   box-shadow: 0 18px 40px var(--shadow);
   z-index:3;
-  clip-path: polygon(0 0, 100% 0, 50% 100%); /* Forma de solapa de sobre más clásica */
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 
-/* cuerpo del sobre (borde y efecto 3D) */
+/* cuerpo del sobre */
 .envelope .body{
   position:absolute;
   left:8px;
   right:8px;
-  top:54px; /* Ajuste por la solapa más corta */
+  top:54px;
   bottom:12px;
   border-radius:12px;
   perspective:800px;
@@ -101,8 +101,8 @@ body::before {
   transform:translateY(0);
   transition:transform 420ms ease, opacity 300ms ease;
   z-index:2;
-  /* Patrón de corazones discretos en la carta */
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24'><path fill='%23e74c3c' fill-opacity='0.08' d='M12 21s-6.716-4.35-9.094-7.044C0.833 11.8 2.172 7 6 7c1.927 0 3.02 1.23 3.894 2.06C10.98 8.23 12.073 7 14 7c3.828 0 5.167 4.8 3.094 6.956C18.716 16.65 12 21 12 21z'/></svg>");
+  /* Patrón discreto en la carta */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24'><path fill='%233498db' fill-opacity='0.12' d='M12 21s-6.716-4.35-9.094-7.044C0.833 11.8 2.172 7 6 7c1.927 0 3.02 1.23 3.894 2.06C10.98 8.23 12.073 7 14 7c3.828 0 5.167 4.8 3.094 6.956C18.716 16.65 12 21 12 21z'/></svg>");
   background-repeat: repeat;
   background-size: 48px 48px;
 }
@@ -113,8 +113,18 @@ body::before {
   font-size:24px;
   color:var(--accent);
   letter-spacing:1px;
-  text-shadow: 0 0 8px rgba(100, 255, 218, 0.5); /* Efecto de brillo de la luz en el título */
+  text-shadow: 0 0 8px rgba(100, 255, 218, 0.5);
 }
+
+.sender-name {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--card-text);
+}
+
 .message{
   margin:0 0 14px;
   font-size:18px;
@@ -128,7 +138,7 @@ body::before {
   line-height:1.4;
 }
 
-/* pequeño brillo y corazón flotante (Ahora un punto de luz) */
+/* pequeño brillo y heart flotante */
 .envelope::after{
   content:'';
   position:absolute;
@@ -159,7 +169,7 @@ body::before {
     background: #46c7b0;
 }
 
-/* estado abierto (solapa gira y carta sube) */
+/* estado abierto */
 .envelope.open .flap{ transform: rotateX(-180deg); }
 .envelope.open .card{ transform: translateY(-22px); }
 .envelope.open .message{ opacity:1; transform:translateY(0) scale(1); }
@@ -179,7 +189,7 @@ body::before {
     100% { opacity: 1; box-shadow: 0 0 120px 70px rgba(100, 255, 218, 0.22) inset; }
 }
 
-/* 2. Luciérnagas/Estrellas (Puntos de luz flotantes) */
+/* 2. Luciérnagas/Estrellas */
 .stage::before, .stage::after {
     content: '';
     position: absolute;
@@ -212,18 +222,21 @@ body::before {
     100% { transform: translate(-20px, 40px) scale(1); opacity: 0.7; }
 }
 
-/* 3. Estilo para los Corazones flotantes */
+/* 3. Estilo para los Corazones flotantes (Azules de diferentes tonos y tamaños) */
 .heart {
     position: absolute;
     top: 100vh;
-    font-size: calc(10px + var(--i) * 3px);
-    color: #e74c3c;
+    font-size: calc(18px + var(--i) * 1.5px); 
+    color: #4a90e2; /* Azul medio predeterminado */
     animation: floatHeart 10s infinite ease-in-out;
     animation-delay: var(--delay);
-    left: calc(10% + var(--i) * 15%);
+    left: calc(10% + var(--i) * 7%);
     z-index: 5;
     opacity: 0.8;
-    text-shadow: 0 0 5px rgba(231, 76, 60, 0.5);
+    /* Sombras azules para el efecto de luz */
+    text-shadow: 0 0 5px rgba(74, 144, 226, 0.7), 0 0 10px rgba(138, 175, 237, 0.5);
+    /* Rotación de color (hue) y brillo (brightness) para variar los tonos de azul */
+    filter: hue-rotate(calc(var(--i) * 15deg)) brightness(calc(1 + var(--i) * 0.05)); 
 }
 
 @keyframes floatHeart {
