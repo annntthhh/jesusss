@@ -9,6 +9,8 @@
     --card-bg: #f8f8f8;         /* Carta casi blanca */
     --card-text: #333333;       
     --star-color: #ffda8a;      /* AMARILLO/DORADO TENUE */
+    --cloud-color-light: rgba(255, 236, 179, 0.04); /* Color de nubes MUY sutil y luminoso */
+    --cloud-color-dark: rgba(0, 0, 0, 0); /* Nubes casi transparentes */
     --heart-click-color: #ff0000; /* Color base para corazones de clic */
 }
 
@@ -18,7 +20,6 @@ html,body{height:100%}
 body{
     margin:0;
     font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif; 
-    background:var(--bg); /* Fondo base */
     color:var(--text);
     display:flex;
     align-items:center;
@@ -26,6 +27,25 @@ body{
     padding:32px;
     position:relative; 
     overflow: hidden; 
+
+    /* === FONDO DE CIELO NOCTURNO CON NUBES === */
+    background-color: var(--bg); /* Color base del cielo profundo */
+    background-image: 
+        /* Capa de nubes 1: Grandes, sutiles y moviéndose lentamente */
+        radial-gradient(ellipse at 10% 20%, var(--cloud-color-light) 0%, var(--cloud-color-dark) 80%),
+        radial-gradient(ellipse at 80% 90%, var(--cloud-color-light) 0%, var(--cloud-color-dark) 70%),
+        radial-gradient(ellipse at 40% 60%, var(--cloud-color-light) 0%, var(--cloud-color-dark) 90%),
+        radial-gradient(ellipse at 60% 30%, var(--cloud-color-light) 0%, var(--cloud-color-dark) 85%);
+    background-size: 800px 600px, 900px 700px, 700px 500px, 1000px 800px; /* Tamaños de las nubes */
+    background-position: 0 0, 50px 100px, 150px -50px, -100px 200px; /* Posiciones iniciales */
+    background-repeat: no-repeat;
+    animation: cloudMove 120s linear infinite alternate; /* ¡NUEVO! Movimiento lento de nubes */
+}
+
+/* Animación de movimiento de nubes */
+@keyframes cloudMove {
+    0% { background-position: 0 0, 50px 100px, 150px -50px, -100px 200px; }
+    100% { background-position: -200px 100px, 150px 0, 50px 150px, 0px 50px; } /* Desplazamiento sutil */
 }
 
 /* FIRMA "DE ANE" FLOTANTE ARRIBA DEL SOBRE */
@@ -85,49 +105,6 @@ body::before {
     background: transparent;
     border-radius: 50%; /* Esfera central invisible */
     
-    /* Genera las estrellas con box-shadow: (horizontal, vertical, blur, spread, color) */
-    box-shadow: 
-        /* Estrellas pequeñas y tenues */
-        100px 300px 0 0 var(--star-color),
-        150px 150px 0 0 var(--star-color),
-        200px 500px 0 0 var(--star-color),
-        300px 100px 0 0 var(--star-color),
-        400px 400px 0 0 var(--star-color),
-        550px 200px 0 0 var(--star-color),
-        700px 50px 0 0 var(--star-color),
-        800px 350px 0 0 var(--star-color),
-        950px 100px 0 0 var(--star-color),
-        
-        /* Estrellas de 4 puntas usando el truco de la sombra */
-        100px 300px 0 0 var(--star-color),  /* Centro */
-        101px 300px 0 0 var(--star-color),  /* Derecha */
-        99px 300px 0 0 var(--star-color),   /* Izquierda */
-        100px 301px 0 0 var(--star-color),  /* Abajo */
-        100px 299px 0 0 var(--star-color);  /* Arriba */
-
-    /* Repetir patrón para llenar la pantalla (solo ejemplo) */
-    /* Este es el truco para llenar toda la pantalla con muchas estrellas */
-    box-shadow: 
-        0px 0px 0 0 var(--star-color),
-        1px 0 0 0 var(--star-color),
-        -1px 0 0 0 var(--star-color),
-        0 1px 0 0 var(--star-color),
-        0 -1px 0 0 var(--star-color),
-        
-        /* Repeticiones para simular muchas estrellas */
-        10px 10px 0 0 var(--star-color),
-        11px 10px 0 0 var(--star-color),
-        9px 10px 0 0 var(--star-color),
-        10px 11px 0 0 var(--star-color),
-        10px 9px 0 0 var(--star-color),
-        
-        /* Más repeticiones */
-        20px 20px 0 0 var(--star-color),
-        21px 20px 0 0 var(--star-color),
-        19px 20px 0 0 var(--star-color),
-        20px 21px 0 0 var(--star-color),
-        20px 19px 0 0 var(--star-color);
-    
     /* Generación con una función CSS para una cuadrícula densa de 4 puntas */
     box-shadow: 
         /* Genera las estrellas en una cuadrícula (x, y, blur, spread, color) */
@@ -154,12 +131,13 @@ body::before {
     
     /* Ajuste de escala para que se vean pequeñas */
     transform: scale(0.6); 
+    opacity: 0.9; /* Hacemos las estrellas un poco más visibles */
 }
 
 /* Animación de movimiento lento de las estrellas */
 @keyframes moveStars {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(150px, 150px); } /* Movimiento lento en diagonal */
+    0% { transform: translate(0, 0) scale(0.6); }
+    100% { transform: translate(150px, 150px) scale(0.6); } /* Movimiento lento en diagonal */
 }
 
 
@@ -171,18 +149,163 @@ body::before {
     z-index: 10; 
 }
 
-/* El resto del CSS sigue igual... (Se han omitido para brevedad, pero reemplaza TODO con el código completo) */
+/* SOBRE: ESTRUCTURA BÁSICA */
 .envelope{
     position:relative;
     width:380px;
     height:280px;
-    perspective:1200px; 
+    perspective:1200px; /* Para el efecto 3D de la solapa */
     margin:0 auto 12px;
     cursor: pointer; 
 }
-/* ...El resto de estilos de Envelope, Card, Mensaje, Muaaa, etc., deben ser copiados del bloque de código completo que te proporciono */
-/*
-    Asegúrate de copiar el CSS COMPLETO que te proporcioné antes de este ajuste,
-    ya que aquí sólo muestro la sección modificada para las estrellas.
-    ¡Es fundamental que copies todo el bloque de código de arriba!
-*/
+
+/* SOLAPA SUPERIOR DEL SOBRE */
+.envelope .flap{
+    position:absolute;
+    left:20px;
+    right:20px;
+    top:0;
+    height:100px; 
+    background: linear-gradient(180deg, #28507c, var(--envelope)); /* Degradado sutil */
+    border-radius:10px;
+    transform-origin:top center;
+    transform:rotateX(0deg); /* Estado inicial cerrado */
+    transition:transform 700ms cubic-bezier(.2,.9,.2,1); /* Animación suave */
+    box-shadow: 0 18px 40px var(--shadow);
+    z-index:3;
+    clip-path: polygon(0 0, 100% 0, 50% 100%); /* Forma de triángulo */
+}
+
+/* CUERPO DEL SOBRE */
+.envelope .body{
+    position:absolute;
+    left:8px;
+    right:8px;
+    top:54px;
+    bottom:12px;
+    border-radius:12px;
+    perspective:800px;
+    transform-style:preserve-3d;
+    z-index:1;
+    background-color: var(--envelope);
+}
+
+/* TARJETA INTERIOR (DENTRO DEL SOBRE) */
+.envelope .card{
+    position:absolute;
+    left:8px;
+    right:8px;
+    top:0;
+    bottom:0;
+    background-color: var(--card-bg); 
+    border-radius:12px;
+    padding:32px 24px;
+    box-shadow: 0 18px 46px rgba(0,0,0,0.1);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    transform:translateY(0); /* Posición inicial */
+    transition:transform 420ms ease; /* Animación de subida de la tarjeta */
+    z-index:2;
+}
+
+/* ENCABEZADO "Para mi negro precioso" */
+.envelope h1{
+    margin:0 0 10px;
+    font-size:24px;
+    color:var(--card-text); 
+    letter-spacing:1px;
+    opacity: 0; /* Oculto al inicio */
+    transform: translateY(10px); /* Ligeramente desplazado */
+    transition: opacity 420ms ease 100ms, transform 420ms ease 100ms;
+}
+
+/* MENSAJE PRINCIPAL */
+.message{
+    margin:10px 0 5px; 
+    font-size:18px;
+    opacity:0; /* Oculto al inicio */
+    transform:translateY(12px) scale(0.99);
+    transition:opacity 420ms ease 180ms, transform 420ms ease 180ms;
+    color: var(--card-text);
+    text-align: left; /* ALINEACIÓN A LA IZQUIERDA PARA MEJOR FLUJO */
+    word-break: break-word; 
+    line-height: 1.3; 
+    width: 100%; /* Asegura que ocupe todo el ancho disponible para el flujo */
+}
+
+/* TEXTO "Muaaa" */
+.muaaa-text {
+    font-size: 20px; 
+    font-weight: bold;
+    color: #f06292; /* Un rosa más cálido */
+    opacity: 0; /* Oculto al inicio */
+    transform: translateY(20px) scale(0.9);
+    transition: opacity 420ms ease 280ms, transform 420ms ease 280ms;
+    margin-top: 10px; 
+    text-shadow: 0 0 10px rgba(240, 98, 146, 0.7); 
+}
+
+/* ESTADO ABIERTO DEL SOBRE: REVELA CONTENIDO */
+.envelope.open .flap{ transform: rotateX(-180deg); } /* Solapa se abre */
+.envelope.open .card{ transform: translateY(-22px); } /* Tarjeta sube ligeramente */
+
+/* MUESTRA TODOS LOS ELEMENTOS DE TEXTO AL ABRIR EL SOBRE */
+.envelope.open h1,
+.envelope.open .message,
+.envelope.open .muaaa-text {
+    opacity: 1; /* Hacemos que aparezcan */
+    transform: translateY(0) scale(1); /* Vuelven a su posición y tamaño normal */
+}
+
+/* Mantenemos el Muaaa centrado */
+.envelope.open .muaaa-text {
+    text-align: center;
+}
+/* Centramos el título */
+.envelope.open h1 {
+    text-align: center;
+}
+
+
+/* PISTA Y RESPONSIVE */
+.hint{ margin-top:12px; color:#a9a9a9; font-size:14px; }
+@media (max-width:520px){
+    .envelope{ width:94%; height:240px; }
+    .message{ font-size:16px; }
+    .muaaa-text { font-size: 18px; }
+}
+
+
+/* --- Corazones al Hacer Clic (Lucecitas Mágicas) --- */
+.click-heart {
+    position: absolute;
+    font-size: 28px; /* Tamaño del corazón, un poco más grande */
+    color: var(--heart-click-color); /* Rojo vibrante */
+    pointer-events: none; /* Ignora clics en sí mismo para que no interfiera */
+    transform: translate(-50%, -50%); /* Centra el corazón en el punto del clic */
+    animation: fadeAndRise 1.5s forwards ease-out; /* Animación de desvanecer y subir */
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.4); /* Brillo intenso */
+    z-index: 9999; /* Asegura que esté por encima de todo */
+    opacity: 0; /* Comienza invisible */
+}
+
+@keyframes fadeAndRise {
+    0% {
+        opacity: 0; /* Empieza totalmente transparente */
+        transform: translate(-50%, -50%) scale(0.5); /* Más pequeño al inicio */
+    }
+    10% {
+        opacity: 1; /* Aparece rápidamente */
+        transform: translate(-50%, -60%) scale(1.1); /* Se expande un poco */
+    }
+    80% {
+        opacity: 0.8; /* Se mantiene visible pero empieza a desvanecer */
+        transform: translate(-50%, -200%) scale(0.9); /* Sube y se encoge */
+    }
+    100% {
+        opacity: 0; /* Totalmente transparente al final */
+        transform: translate(-50%, -300%) scale(0.7); /* Termina de subir y encoger */
+    }
+}
