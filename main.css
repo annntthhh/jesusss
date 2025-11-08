@@ -9,6 +9,7 @@
     --card-bg: #f8f8f8;         /* Carta casi blanca */
     --card-text: #333333;       
     --star-color: #ffda8a;      /* AMARILLO/DORADO TENUE PARA LAS LUCIÉRNAGAS/ESTRELLAS */
+    --falling-star-color: #ffd700; /* Color dorado brillante para las estrellas que caen */
     --heart-click-color: #ff0000; /* Color base para corazones de clic */
 }
 
@@ -72,18 +73,57 @@ body::after {
     left: 0;
     width: 100%;
     height: 100%;
-    /* --- AQUÍ LA CORRECCIÓN DE LOS GRADIENTES PARA EVITAR CUADROS --- */
     background: 
         radial-gradient(circle, var(--star-color) 1px, transparent 1.5px) 0px 0px / 150px 150px,
         radial-gradient(circle, var(--star-color) 0.5px, transparent 1px) 40px 40px / 80px 80px;
-    background-repeat: repeat; /* ASEGURAMOS QUE SE REPITAN */
-    animation: starTwinkle 60s linear infinite; /* Movimiento LENTO (60s) */
-    z-index: -2; /* Detrás de todo */
+    background-repeat: repeat; 
+    animation: starTwinkle 60s linear infinite; 
+    z-index: -2; 
     opacity: 0.7;
 }
 @keyframes starTwinkle {
     0% { background-position: 0 0, 40px 40px; }
-    100% { background-position: 150px 150px, 120px 120px; } /* Desplazamiento para el "movimiento" */
+    100% { background-position: 150px 150px, 120px 120px; } 
+}
+
+/* --- NUEVO: Estrellitas que caen al abrir el sobre --- */
+#falling-stars-container {
+    position: fixed; /* Ocupa toda la ventana */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* No interfiere con clics */
+    overflow: hidden; /* Las estrellas desaparecen al salir del contenedor */
+    z-index: 90; /* Por encima de los fondos, pero debajo del sobre */
+}
+
+.falling-star {
+    position: absolute;
+    top: -20px; /* Empiezan un poco fuera de la vista superior */
+    font-size: 18px; /* Tamaño de la estrella */
+    color: var(--falling-star-color); /* Color dorado brillante */
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.8), 0 0 15px rgba(255, 215, 0, 0.4); /* Brillo */
+    opacity: 0; /* Empieza invisible */
+    animation: fallAndFade linear forwards; /* Animación de caída y desvanecimiento */
+}
+
+@keyframes fallAndFade {
+    0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1; /* Aparece rápidamente */
+        transform: translateY(10%) scale(1);
+    }
+    80% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) scale(0.5); /* Cae hasta el final de la vista */
+        opacity: 0; /* Se desvanece al caer */
+    }
 }
 
 
@@ -100,158 +140,4 @@ body::after {
     position:relative;
     width:380px;
     height:280px;
-    perspective:1200px; /* Para el efecto 3D de la solapa */
-    margin:0 auto 12px;
-    cursor: pointer; 
-}
-
-/* SOLAPA SUPERIOR DEL SOBRE */
-.envelope .flap{
-    position:absolute;
-    left:20px;
-    right:20px;
-    top:0;
-    height:100px; 
-    background: linear-gradient(180deg, #28507c, var(--envelope)); /* Degradado sutil */
-    border-radius:10px;
-    transform-origin:top center;
-    transform:rotateX(0deg); /* Estado inicial cerrado */
-    transition:transform 700ms cubic-bezier(.2,.9,.2,1); /* Animación suave */
-    box-shadow: 0 18px 40px var(--shadow);
-    z-index:3;
-    clip-path: polygon(0 0, 100% 0, 50% 100%); /* Forma de triángulo */
-}
-
-/* CUERPO DEL SOBRE */
-.envelope .body{
-    position:absolute;
-    left:8px;
-    right:8px;
-    top:54px;
-    bottom:12px;
-    border-radius:12px;
-    perspective:800px;
-    transform-style:preserve-3d;
-    z-index:1;
-    background-color: var(--envelope);
-}
-
-/* TARJETA INTERIOR (DENTRO DEL SOBRE) */
-.envelope .card{
-    position:absolute;
-    left:8px;
-    right:8px;
-    top:0;
-    bottom:0;
-    background-color: var(--card-bg); 
-    border-radius:12px;
-    padding:32px 24px;
-    box-shadow: 0 18px 46px rgba(0,0,0,0.1);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    transform:translateY(0); /* Posición inicial */
-    transition:transform 420ms ease; /* Animación de subida de la tarjeta */
-    z-index:2;
-}
-
-/* ENCABEZADO "Para mi negro precioso" */
-.envelope h1{
-    margin:0 0 10px;
-    font-size:24px;
-    color:var(--card-text); 
-    letter-spacing:1px;
-    opacity: 0; /* Oculto al inicio */
-    transform: translateY(10px); /* Ligeramente desplazado */
-    transition: opacity 420ms ease 100ms, transform 420ms ease 100ms;
-}
-
-/* MENSAJE PRINCIPAL */
-.message{
-    margin:10px 0 5px; 
-    font-size:18px;
-    opacity:0; /* Oculto al inicio */
-    transform:translateY(12px) scale(0.99);
-    transition:opacity 420ms ease 180ms, transform 420ms ease 180ms;
-    color: var(--card-text);
-    text-align: left; /* ALINEACIÓN A LA IZQUIERDA PARA MEJOR FLUJO */
-    word-break: break-word; 
-    line-height: 1.3; 
-    width: 100%; /* Asegura que ocupe todo el ancho disponible para el flujo */
-}
-
-/* TEXTO "Muaaa" */
-.muaaa-text {
-    font-size: 20px; 
-    font-weight: bold;
-    color: #f06292; /* Un rosa más cálido */
-    opacity: 0; /* Oculto al inicio */
-    transform: translateY(20px) scale(0.9);
-    transition: opacity 420ms ease 280ms, transform 420ms ease 280ms;
-    margin-top: 10px; 
-    text-shadow: 0 0 10px rgba(240, 98, 146, 0.7); 
-}
-
-/* ESTADO ABIERTO DEL SOBRE: REVELA CONTENIDO */
-.envelope.open .flap{ transform: rotateX(-180deg); } /* Solapa se abre */
-.envelope.open .card{ transform: translateY(-22px); } /* Tarjeta sube ligeramente */
-
-/* MUESTRA TODOS LOS ELEMENTOS DE TEXTO AL ABRIR EL SOBRE */
-.envelope.open h1,
-.envelope.open .message,
-.envelope.open .muaaa-text {
-    opacity: 1; /* Hacemos que aparezcan */
-    transform: translateY(0) scale(1); /* Vuelven a su posición y tamaño normal */
-}
-
-/* Mantenemos el Muaaa centrado */
-.envelope.open .muaaa-text {
-    text-align: center;
-}
-/* Centramos el título */
-.envelope.open h1 {
-    text-align: center;
-}
-
-
-/* PISTA Y RESPONSIVE */
-.hint{ margin-top:12px; color:#a9a9a9; font-size:14px; }
-@media (max-width:520px){
-    .envelope{ width:94%; height:240px; }
-    .message{ font-size:16px; }
-    .muaaa-text { font-size: 18px; }
-}
-
-
-/* --- Corazones al Hacer Clic (Lucecitas Mágicas) --- */
-.click-heart {
-    position: absolute;
-    font-size: 28px; /* Tamaño del corazón, un poco más grande */
-    color: var(--heart-click-color); /* Rojo vibrante */
-    pointer-events: none; /* Ignora clics en sí mismo para que no interfiera */
-    transform: translate(-50%, -50%); /* Centra el corazón en el punto del clic */
-    animation: fadeAndRise 1.5s forwards ease-out; /* Animación de desvanecer y subir */
-    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.4); /* Brillo intenso */
-    z-index: 9999; /* Asegura que esté por encima de todo */
-    opacity: 0; /* Comienza invisible */
-}
-
-@keyframes fadeAndRise {
-    0% {
-        opacity: 0; /* Empieza totalmente transparente */
-        transform: translate(-50%, -50%) scale(0.5); /* Más pequeño al inicio */
-    }
-    10% {
-        opacity: 1; /* Aparece rápidamente */
-        transform: translate(-50%, -60%) scale(1.1); /* Se expande un poco */
-    }
-    80% {
-        opacity: 0.8; /* Se mantiene visible pero empieza a desvanecer */
-        transform: translate(-50%, -200%) scale(0.9); /* Sube y se encoge */
-    }
-    100% {
-        opacity: 0; /* Totalmente transparente al final */
-        transform: translate(-50%, -300%) scale(0.7); /* Termina de subir y encoger */
-    }
-}
+    perspective:1200px;
