@@ -1,55 +1,82 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Mi Negro Precioso - Noche Mágica</title>
-    <link rel="stylesheet" href="./main.css">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    
-    <audio id="background-music" loop>
-        <source src="./cuco.mp3" type="audio/mp3"> 
-        Tu navegador no soporta el elemento de audio.
-    </audio>
-    
-    <p class="sender-top">De Ane.</p>
-
-    <div id="falling-stars-container"></div>
-
-    <div class="stage">
-        <div class="envelope">
-            <div class="flap"></div>
-            <div class="body">
-                <div class="card">
-                    
-                    <h1>Para mi negro precioso</h1> 
-                    <p class="message">
-                        Te amo muchomuchisimomuchisisisimodemasiadoinfinoultramegaetc mi amor bello, hombre de mi vida, negro precioso, mi corazon, mi todo.
-                    </p>
-                    <p class="muaaa-text">Muaaa</p> 
-                </div>
-            </div>
-        </div>
-        <p class="hint">Pasa el mouse sobre el sobre para ver el mensaje.</p> 
-    </div>
-
-    <script>
+<script>
         const envelope = document.querySelector('.envelope');
         const music = document.getElementById('background-music');
-        const fallingStarsContainer = document.getElementById('falling-stars-container'); // NUEVO
+        const fallingStarsContainer = document.getElementById('falling-stars-container'); 
         let musicPlayed = false;
-        let starsGenerated = false; // NUEVO: Para asegurar que las estrellas caigan una sola vez
+        let starsGenerated = false; 
 
         // Abre el sobre al pasar el mouse por encima (hover)
         envelope.addEventListener('mouseenter', function() {
             envelope.classList.add('open');
             
-            // Intenta reproducir la música SOLO la primera vez que se abre el sobre
             if (!musicPlayed) {
                 music.play().catch(error => {
-                    console.log("Música bloqueada por el
+                    console.log("Música bloqueada por el navegador. Se necesita un clic.", error);
+                });
+                musicPlayed = true;
+            }
+
+            // NUEVO: Generar las estrellitas al abrir el sobre
+            if (!starsGenerated) {
+                generateFallingStars();
+                starsGenerated = true; 
+            }
+        });
+        
+        // CÓDIGO OPCIONAL: Permite que la música inicie si hacen clic en CUALQUIER PARTE de la página
+        document.addEventListener('click', () => {
+            if (!musicPlayed) {
+                music.play().catch(error => {});
+                musicPlayed = true;
+            }
+        }, { once: true });
+
+
+        // Función para crear y animar corazones al hacer clic
+        document.addEventListener('click', function(e) {
+            const clickHeart = document.createElement('span');
+            clickHeart.classList.add('click-heart');
+            clickHeart.textContent = '❤️'; 
+            
+            clickHeart.style.zIndex = '99999'; 
+            clickHeart.style.position = 'absolute';
+            
+            clickHeart.style.left = e.clientX + 'px';
+            clickHeart.style.top = e.clientY + 'px';
+            document.body.appendChild(clickHeart);
+
+            clickHeart.addEventListener('animationend', () => {
+                clickHeart.remove();
+            });
+        });
+
+        // REVISADO: Función para generar y animar las estrellitas que caen
+        function generateFallingStars() {
+            const numberOfStars = 30; // Cuántas estrellas caerán
+            
+            // Usamos las dimensiones de la ventana para que las estrellas caigan por toda la pantalla
+            const containerWidth = window.innerWidth;
+
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('span');
+                star.classList.add('falling-star');
+                star.textContent = '✦'; 
+                
+                // Posicionamos la estrella aleatoriamente a lo ancho de la pantalla
+                star.style.left = Math.random() * containerWidth + 'px';
+                star.style.animationDelay = Math.random() * 1.5 + 's'; 
+                star.style.animationDuration = (Math.random() * 1.5 + 2) + 's'; 
+                star.style.fontSize = (Math.random() * 10 + 10) + 'px'; // Tamaño aleatorio
+                
+                // Agregamos el contenedor al body para asegurar la visibilidad
+                document.body.appendChild(star); 
+
+                // Eliminamos la estrella después de su animación
+                star.addEventListener('animationend', () => {
+                    star.remove();
+                });
+            }
+        }
+    </script>
+</body>
+</html>
