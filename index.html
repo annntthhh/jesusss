@@ -70,6 +70,7 @@
         document.addEventListener('click', function(e) {
             const clickHeart = document.createElement('span');
             clickHeart.classList.add('click-heart');
+            clickHeart.textContent = '❤️'; // <-- ESTA ES LA LÍNEA QUE FALTABA
             clickHeart.style.left = e.clientX + 'px';
             clickHeart.style.top = e.clientY + 'px';
             document.body.appendChild(clickHeart);
