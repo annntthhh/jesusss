@@ -88,18 +88,16 @@ body::after {
 
 /* --- ESTRELLITAS QUE CAEN AL ABRIR EL SOBRE --- */
 
-/* Eliminamos #falling-stars-container del CSS ya que las estrellas se añaden directamente al body en JS */
-
 .falling-star {
-    position: fixed; /* MUY IMPORTANTE: Se fijan a la ventana */
-    top: -20px; /* Empiezan un poco fuera de la vista superior */
-    font-size: 18px; /* Tamaño base de la estrella */
-    color: var(--falling-star-color); /* Color dorado brillante */
-    text-shadow: 0 0 8px rgba(255, 215, 0, 0.8), 0 0 15px rgba(255, 215, 0, 0.4); /* Brillo */
-    opacity: 0; /* Empieza invisible */
-    animation: fallAndFade linear forwards; /* Animación de caída y desvanecimiento */
-    z-index: 900; /* Alto z-index para que se vea por encima de todo, menos el corazón de click */
-    pointer-events: none; /* No interfiere con clics */
+    position: fixed; /* Asegura que la posición sea relativa a la ventana */
+    top: -5%; /* Inicia la caída desde un poco más arriba de la ventana */
+    font-size: 18px; 
+    color: var(--falling-star-color); 
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.8), 0 0 15px rgba(255, 215, 0, 0.4); 
+    opacity: 0; 
+    animation: fallAndFade linear forwards; 
+    z-index: 900; /* Alto z-index */
+    pointer-events: none; 
 }
 
 @keyframes fallAndFade {
@@ -108,7 +106,7 @@ body::after {
         opacity: 0;
     }
     10% {
-        opacity: 1; /* Aparece rápidamente */
+        opacity: 1; 
         transform: translateY(10%) scale(1);
     }
     80% {
@@ -116,7 +114,7 @@ body::after {
     }
     100% {
         transform: translateY(100vh) scale(0.5); /* Cae hasta el final de la vista */
-        opacity: 0; /* Se desvanece al caer */
+        opacity: 0; 
     }
 }
 
