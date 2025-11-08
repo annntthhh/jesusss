@@ -60,22 +60,15 @@
         const envelope = document.querySelector('.envelope');
         const music = document.getElementById('background-music');
 
-        // Función para iniciar la música al abrir el sobre
         openBtn.addEventListener('click', function() {
             envelope.classList.add('open');
             this.style.display = 'none'; // Oculta el botón
 
-            // **IMPORTANTE**: Intenta iniciar la reproducción de la música
-            // Muchos navegadores modernos SÓLO permiten reproducir música después
-            // de una interacción del usuario (el click en el botón).
+            // Inicia la reproducción de la música al hacer clic
             music.play().catch(error => {
-                console.log("Error al reproducir música, el navegador lo bloqueó hasta interacción del usuario.", error);
-                // Si falla, el usuario tendrá que tocar el botón de reproducir si lo pusiéramos visible.
+                console.log("Error al reproducir música, el navegador lo bloqueó.", error);
             });
         });
-
-        // NOTA: Para que la música funcione, debes reemplazar 
-        // "URL_DIRECTO_A_TU_ARCHIVO_MP3" en la línea 17 con un link directo al archivo MP3 de la canción.
     </script>
 </body>
 </html>
