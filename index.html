@@ -64,6 +64,21 @@
                 musicPlayed = true;
             }
         }, { once: true });
+
+
+        // Función para crear y animar corazones al hacer clic
+        document.addEventListener('click', function(e) {
+            const clickHeart = document.createElement('span');
+            clickHeart.classList.add('click-heart');
+            clickHeart.style.left = e.clientX + 'px';
+            clickHeart.style.top = e.clientY + 'px';
+            document.body.appendChild(clickHeart);
+
+            // Eliminar el corazón después de su animación
+            clickHeart.addEventListener('animationend', () => {
+                clickHeart.remove();
+            });
+        });
     </script>
 </body>
 </html>
