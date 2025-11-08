@@ -1,4 +1,4 @@
-/* --- DISEÑO BASE: NOCHE MÁGICA Y SOBRE FUNCIONAL --- */
+/* --- DISEÑO FINAL ESTABLE: NOCHE MÁGICA Y SOBRE FUNCIONAL --- */
 
 :root{
     --bg: #0d1a2f;              /* AZUL OSCURO PROFUNDO (Noche) */
@@ -45,7 +45,7 @@ body{
     100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
 }
 
-/* EFECTO DE LUZ TENUE (como un aura mágica) */
+/* 1. EFECTO DE LUZ TENUE (MAGIA) */
 body::before {
     content: '';
     position: fixed;
@@ -57,6 +57,33 @@ body::before {
     animation: pulse 6s infinite alternate; 
     pointer-events: none;
     z-index: -1;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 180px 75px rgba(255, 236, 179, 0.15) inset; }
+    100% { box-shadow: 0 0 220px 85px rgba(255, 236, 179, 0.25) inset; } 
+}
+
+/* 2. ESTRELLAS/LUCIÉRNAGAS */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, var(--star-color) 1px, transparent 1.5px) repeat,
+                radial-gradient(circle, var(--star-color) 0.5px, transparent 1px) repeat;
+    background-size: 150px 150px, 80px 80px;
+    background-position: 0 0, 40px 40px;
+    animation: starTwinkle 30s linear infinite;
+    z-index: -2;
+    opacity: 0.7;
+}
+
+@keyframes starTwinkle {
+    0% { background-position: 0 0, 40px 40px; }
+    100% { background-position: 150px 150px, 120px 120px; }
 }
 
 /* contenedor */
@@ -131,32 +158,33 @@ body::before {
     letter-spacing:1px;
 }
 
+/* 3. VISIBILIDAD DEL TEXTO CORREGIDA */
 .message{
-    margin:10px 0 5px; /* Ajuste para dar espacio al Muaaa */
+    margin:10px 0 5px; 
     font-size:18px;
-    opacity:0;
+    opacity:0; /* Oculto al inicio */
     transform:translateY(12px) scale(0.99);
     transition:opacity 420ms ease 180ms, transform 420ms ease 180ms;
     color: var(--card-text);
     text-align:center;
     white-space: pre-line; 
     word-break: break-word; 
-    line-height: 1.3; /* Espaciado entre líneas un poco más holgado */
+    line-height: 1.3; 
 }
 
-/* Estilo para el "Muaaa" */
+/* Estilo para el "Muaaa" (Visible al abrir) */
 .muaaa-text {
-    font-size: 20px; /* Tamaño del Muaaa */
+    font-size: 20px; 
     font-weight: bold;
-    color: #f06292; /* Un rosa más cálido para el Muaaa */
-    opacity: 0;
+    color: #f06292; 
+    opacity: 0; /* Oculto al inicio */
     transform: translateY(20px) scale(0.9);
     transition: opacity 420ms ease 280ms, transform 420ms ease 280ms;
-    margin-top: 10px; /* Separación del mensaje principal */
-    text-shadow: 0 0 10px rgba(240, 98, 146, 0.7); /* Brillo tenue */
+    margin-top: 10px; 
+    text-shadow: 0 0 10px rgba(240, 98, 146, 0.7); 
 }
 
-/* estado abierto */
+/* estado abierto - MUESTRA EL TEXTO */
 .envelope.open .flap{ transform: rotateX(-180deg); }
 .envelope.open .card{ transform: translateY(-22px); }
 .envelope.open .message{ opacity:1; transform:translateY(0) scale(1); }
@@ -166,3 +194,6 @@ body::before {
 .hint{ margin-top:12px; color:#a9a9a9; font-size:14px; }
 @media (max-width:520px){
     .envelope{ width:94%; height:240px; }
+    .message{ font-size:16px; }
+    .muaaa-text { font-size: 18px; }
+}
