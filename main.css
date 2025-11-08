@@ -27,6 +27,25 @@ body{
   overflow: hidden;
 }
 
+/* FIRMA "DE ANE" FLOTANTE ARRIBA DEL SOBRE */
+.sender-top {
+    position: absolute;
+    top: 50px; /* Ajusta esta altura */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent); /* Color de acento para que resalte */
+    text-shadow: 0 0 10px rgba(255, 235, 59, 0.7);
+    z-index: 100; /* Asegura que esté por encima de todo */
+    animation: pulseText 3s infinite alternate; /* Efecto de titileo sutil */
+}
+@keyframes pulseText {
+    0% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+    100% { opacity: 1; transform: translateX(-50%) scale(1.03); }
+}
+
+
 /* EFECTO DE LUZ TENUE Y PARPADEO */
 body::before {
     content: '';
@@ -114,14 +133,15 @@ body::before {
   letter-spacing:1px;
 }
 
-.sender-name {
+/* Eliminamos .sender-name de aquí */
+/* .sender-name {
     position: absolute;
     bottom: 25px;
     right: 25px;
     font-size: 16px;
     font-weight: 700;
     color: var(--card-text);
-}
+} */
 
 .message{
   margin:10px 0 14px;
@@ -187,62 +207,14 @@ body::before {
     100% { opacity: 1; box-shadow: 0 0 120px 70px rgba(255, 235, 59, 0.3) inset; } 
 }
 
-/* 2. Luciérnagas BLANCAS/VERDES (Titilan y Flotan) */
-.stage::before, .stage::after {
+/* 2. Luciérnagas BLANCAS/VERDES (MUCHAS, Titilan y Flotan por toda la pantalla) */
+/* Generamos varias luciérnagas con pseudoelementos */
+body::before, body::after,
+.stage::before, .stage::after,
+.envelope .body::before, .envelope .body::after,
+.envelope .flap::before, .envelope .flap::after {
     content: '';
     position: absolute;
     width: 2px;
     height: 2px;
-    background-color: var(--firefly-color); 
-    border-radius: 50%;
-    box-shadow: 0 0 5px var(--firefly-color), 0 0 10px rgba(224, 242, 241, 0.5);
-    animation: floatLight 15s infinite ease-in-out alternate, glow 2s infinite alternate;
-    z-index: 0;
-}
-
-.stage::before {
-    top: 10%;
-    left: 15%;
-    animation-delay: 1s;
-    transform: scale(0.8);
-}
-
-.stage::after {
-    bottom: 20%;
-    right: 10%;
-    animation-delay: 4s;
-    transform: scale(1.2);
-}
-
-@keyframes floatLight {
-    0% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(30px, -55px) scale(0.9); }
-    100% { transform: translate(-20px, 45px) scale(1); }
-}
-
-@keyframes glow {
-    0% { opacity: 0.6; box-shadow: 0 0 3px var(--firefly-color); }
-    100% { opacity: 1; box-shadow: 0 0 8px var(--firefly-color), 0 0 15px rgba(100, 255, 100, 0.3); } /* Efecto de titileo con un toque verde */
-}
-
-/* 3. Estilo para los Corazones flotantes (ROJO OSCURO) */
-.heart {
-    position: absolute;
-    top: 100vh;
-    font-size: calc(18px + var(--i) * 1.5px); 
-    color: #880000; /* Rojo muy oscuro, casi borgoña */
-    animation: floatHeart 10s infinite ease-in-out;
-    animation-delay: var(--delay);
-    left: calc(10% + var(--i) * 7%);
-    z-index: 5;
-    opacity: 0.8;
-    /* Sombras sutiles para el efecto 3D oscuro */
-    text-shadow: 0 0 5px rgba(136, 0, 0, 0.7), 0 0 10px rgba(100, 0, 0, 0.5);
-    /* Rotación de color (hue) y brillo (brightness) para variar los tonos, pero manteniéndose oscuros */
-    filter: hue-rotate(calc(var(--i) * 5deg)) brightness(calc(1 - var(--i) * 0.05)); 
-}
-
-@keyframes floatHeart {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
-    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-}
+    background-color: var(--firefly-color
