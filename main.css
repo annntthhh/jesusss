@@ -1,11 +1,13 @@
-/* --- NUEVO DISEÑO: ÍNDIGO PROFUNDO Y PLATA --- */
+/* --- NUEVO DISEÑO: AZUL NOCHE Y MAGIA ROMÁNTICA --- */
 
 :root{
-  --bg: #121212;            /* Negro profundo para el fondo de la página */
-  --envelope: #2c3e50;      /* Azul Índigo oscuro para el cuerpo del sobre */
-  --accent: #1abc9c;        /* Turquesa Oscuro (para acentos y botones) */
-  --shadow: rgba(0,0,0,0.4); /* Sombra más fuerte */
-  --text: #ecf0f1;          /* Texto Blanco/Gris Claro */
+  --bg: #0a192f;            /* Azul Noche Profundo para el fondo */
+  --envelope: #1a426e;      /* Azul Oscuro para el cuerpo del sobre */
+  --accent: #64ffda;        /* Color de Acento Turquesa Brillante */
+  --shadow: rgba(0,0,0,0.6); 
+  --text: #e6f1ff;          /* Texto Blanco/Gris Azulado */
+  --card-bg: #ecf0f1;       /* Fondo de la carta interior (Gris Claro) */
+  --card-text: #333333;     /* Texto de la carta (Oscuro) */
 }
 
 /* básico */
@@ -13,7 +15,6 @@
 html,body{height:100%}
 body{
   margin:0;
-  /* Cambio de fuente a una más moderna y limpia */
   font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif; 
   background:var(--bg);
   color:var(--text);
@@ -21,10 +22,26 @@ body{
   align-items:center;
   justify-content:center;
   padding:32px;
+  position:relative; /* Para los efectos de luz */
+  overflow: hidden; /* Oculta barras de desplazamiento por los efectos flotantes */
+}
+
+/* EFECTO DE LUZ AZUL TENUE EN EL FONDO */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 150px 80px rgba(100, 255, 218, 0.15) inset; /* Luz de fondo tenue */
+    animation: pulse 4s infinite alternate; /* Parpadeo suave */
+    pointer-events: none;
+    z-index: -1;
 }
 
 /* contenedor */
-.stage{ text-align:center; max-width:520px; width:100%; }
+.stage{ text-align:center; max-width:520px; width:100%; z-index: 10; }
 
 /* SOBRE: estructura más realista */
 .envelope{
@@ -35,14 +52,13 @@ body{
   margin:0 auto 12px;
 }
 
-/* solapa superior (triangular) */
+/* solapa superior (triangular, más corta para parecer papel) */
 .envelope .flap{
   position:absolute;
   left:20px;
   right:20px;
   top:0;
-  height:140px;
-  /* Degradado sutil con el color del sobre */
+  height:100px; /* Altura más baja para solapa de papel */
   background: linear-gradient(180deg, #34495e, var(--envelope));
   border-radius:10px;
   transform-origin:top center;
@@ -50,7 +66,7 @@ body{
   transition:transform 700ms cubic-bezier(.2,.9,.2,1);
   box-shadow: 0 18px 40px var(--shadow);
   z-index:3;
-  clip-path: polygon(0 0, 100% 0, 50% 75%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%); /* Forma de solapa de sobre más clásica */
 }
 
 /* cuerpo del sobre (borde y efecto 3D) */
@@ -58,23 +74,23 @@ body{
   position:absolute;
   left:8px;
   right:8px;
-  top:74px;
+  top:54px; /* Ajuste por la solapa más corta */
   bottom:12px;
   border-radius:12px;
   perspective:800px;
   transform-style:preserve-3d;
   z-index:1;
+  background-color: var(--envelope);
 }
 
-/* tarjeta interior con estampado de corazones (cambio de color) */
+/* tarjeta interior */
 .envelope .card{
   position:absolute;
   left:8px;
   right:8px;
   top:0;
   bottom:0;
-  /* La tarjeta interior es gris claro para alto contraste */
-  background-color: #ecf0f1; 
+  background-color: var(--card-bg); 
   border-radius:12px;
   padding:32px 24px;
   box-shadow: 0 18px 46px rgba(0,0,0,0.1);
@@ -85,8 +101,8 @@ body{
   transform:translateY(0);
   transition:transform 420ms ease, opacity 300ms ease;
   z-index:2;
-  /* patrón de corazones más discreto (color de fondo de la tarjeta) */
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24'><path fill='%23bdc3c7' fill-opacity='0.16' d='M12 21s-6.716-4.35-9.094-7.044C0.833 11.8 2.172 7 6 7c1.927 0 3.02 1.23 3.894 2.06C10.98 8.23 12.073 7 14 7c3.828 0 5.167 4.8 3.094 6.956C18.716 16.65 12 21 12 21z'/></svg>");
+  /* Patrón de corazones discretos en la carta */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24'><path fill='%23e74c3c' fill-opacity='0.08' d='M12 21s-6.716-4.35-9.094-7.044C0.833 11.8 2.172 7 6 7c1.927 0 3.02 1.23 3.894 2.06C10.98 8.23 12.073 7 14 7c3.828 0 5.167 4.8 3.094 6.956C18.716 16.65 12 21 12 21z'/></svg>");
   background-repeat: repeat;
   background-size: 48px 48px;
 }
@@ -94,9 +110,10 @@ body{
 /* encabezado y mensaje */
 .envelope h1{
   margin:0 0 10px;
-  font-size:24px; /* Un poco más grande */
-  color:var(--accent); /* Color de acento turquesa */
-  letter-spacing:1px; /* Más espaciado para un look moderno */
+  font-size:24px;
+  color:var(--accent);
+  letter-spacing:1px;
+  text-shadow: 0 0 8px rgba(100, 255, 218, 0.5); /* Efecto de brillo de la luz en el título */
 }
 .message{
   margin:0 0 14px;
@@ -104,14 +121,14 @@ body{
   opacity:0;
   transform:translateY(12px) scale(0.99);
   transition:opacity 420ms ease 180ms, transform 420ms ease 180ms;
-  color: #333; /* Texto oscuro sobre el fondo claro de la tarjeta */
+  color: var(--card-text);
   text-align:center;
   white-space:pre-wrap;
   word-break:break-word;
-  line-height:1.4; /* Más espacio entre líneas */
+  line-height:1.4;
 }
 
-/* pequeño brillo y corazón flotante (ajustado para fondo oscuro) */
+/* pequeño brillo y corazón flotante (Ahora un punto de luz) */
 .envelope::after{
   content:'';
   position:absolute;
@@ -119,11 +136,8 @@ body{
   top:18px;
   width:48px;
   height:48px;
-  /* El brillo ahora es un corazón simple que contrasta */
-  background-color: #e74c3c; /* Pequeño corazón rojo discreto */
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+  background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(255,255,255,0));
+  border-radius:50%;
   z-index:4;
 }
 
@@ -132,9 +146,9 @@ body{
 .open-btn, .music-btn{
   border:0;
   background:var(--accent);
-  color:var(--bg); /* Texto oscuro sobre el botón de acento */
-  padding:10px 18px; /* Botones más grandes */
-  border-radius:4px; /* Bordes más rectos para un look moderno */
+  color:var(--bg);
+  padding:10px 18px;
+  border-radius:4px;
   cursor:pointer;
   font-weight:700;
   box-shadow: 0 6px 14px rgba(0,0,0,0.2);
@@ -142,7 +156,7 @@ body{
 }
 
 .open-btn:hover, .music-btn:hover {
-    background: #16a085; /* Un tono más oscuro de Turquesa al pasar el mouse */
+    background: #46c7b0;
 }
 
 /* estado abierto (solapa gira y carta sube) */
@@ -155,4 +169,64 @@ body{
 @media (max-width:520px){
   .envelope{ width:94%; height:240px; }
   .message{ font-size:16px; }
+}
+
+/* --- ANIMACIONES DE FONDO Y OBJETOS FLOTANTES --- */
+
+/* 1. Animación de Parpadeo Suave para la Luz */
+@keyframes pulse {
+    0% { opacity: 0.95; }
+    100% { opacity: 1; box-shadow: 0 0 120px 70px rgba(100, 255, 218, 0.22) inset; }
+}
+
+/* 2. Luciérnagas/Estrellas (Puntos de luz flotantes) */
+.stage::before, .stage::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background-color: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 5px var(--accent);
+    animation: floatLight 15s infinite ease-in-out alternate;
+    z-index: 0;
+}
+
+.stage::before {
+    top: 10%;
+    left: 15%;
+    animation-delay: 1s;
+    transform: scale(0.8);
+}
+
+.stage::after {
+    bottom: 20%;
+    right: 10%;
+    animation-delay: 4s;
+    transform: scale(1.2);
+}
+
+@keyframes floatLight {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+    50% { transform: translate(30px, -50px) scale(0.9); opacity: 0.9; }
+    100% { transform: translate(-20px, 40px) scale(1); opacity: 0.7; }
+}
+
+/* 3. Estilo para los Corazones flotantes */
+.heart {
+    position: absolute;
+    top: 100vh;
+    font-size: calc(10px + var(--i) * 3px);
+    color: #e74c3c;
+    animation: floatHeart 10s infinite ease-in-out;
+    animation-delay: var(--delay);
+    left: calc(10% + var(--i) * 15%);
+    z-index: 5;
+    opacity: 0.8;
+    text-shadow: 0 0 5px rgba(231, 76, 60, 0.5);
+}
+
+@keyframes floatHeart {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
 }
