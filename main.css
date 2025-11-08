@@ -2,13 +2,13 @@
 
 :root{
   --bg: #1c3d79;            /* ¡AZUL REY para el fondo! */
-  --envelope: #2e5a9c;      /* Azul Oscuro para el cuerpo del sobre */
-  --accent: #ffeb3b;        /* Color de Acento AMARILLO VIVO */
+  --envelope: #2e5a9c;      
+  --accent: #ffeb3b;        /* AMARILLO VIVO */
   --shadow: rgba(0,0,0,0.6); 
   --text: #e6f1ff;          
   --card-bg: #ffffff;       /* ¡CARTA BLANCA PURA! */
   --card-text: #333333;     
-  --firefly-color: #e0f2f1; /* Blanco muy tenue / Verde pálido para luciérnagas */
+  --firefly-color: #e0f2f1; /* Blanco/Verde tenue para luciérnagas */
 }
 
 /* básico */
@@ -30,21 +30,20 @@ body{
 /* FIRMA "DE ANE" FLOTANTE ARRIBA DEL SOBRE */
 .sender-top {
     position: absolute;
-    top: 50px; /* Ajusta esta altura */
+    top: 50px; 
     left: 50%;
     transform: translateX(-50%);
     font-size: 28px;
     font-weight: 700;
-    color: var(--accent); /* Color de acento para que resalte */
+    color: var(--accent); 
     text-shadow: 0 0 10px rgba(255, 235, 59, 0.7);
-    z-index: 100; /* Asegura que esté por encima de todo */
-    animation: pulseText 3s infinite alternate; /* Efecto de titileo sutil */
+    z-index: 100;
+    animation: pulseText 3s infinite alternate; 
 }
 @keyframes pulseText {
     0% { opacity: 0.8; transform: translateX(-50%) scale(1); }
     100% { opacity: 1; transform: translateX(-50%) scale(1.03); }
 }
-
 
 /* EFECTO DE LUZ TENUE Y PARPADEO */
 body::before {
@@ -133,16 +132,6 @@ body::before {
   letter-spacing:1px;
 }
 
-/* Eliminamos .sender-name de aquí */
-/* .sender-name {
-    position: absolute;
-    bottom: 25px;
-    right: 25px;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--card-text);
-} */
-
 .message{
   margin:10px 0 14px;
   font-size:18px;
@@ -208,7 +197,7 @@ body::before {
 }
 
 /* 2. Luciérnagas BLANCAS/VERDES (MUCHAS, Titilan y Flotan por toda la pantalla) */
-/* Generamos varias luciérnagas con pseudoelementos */
+/* Generamos muchas luciérnagas con pseudoelementos */
 body::before, body::after,
 .stage::before, .stage::after,
 .envelope .body::before, .envelope .body::after,
@@ -217,4 +206,57 @@ body::before, body::after,
     position: absolute;
     width: 2px;
     height: 2px;
-    background-color: var(--firefly-color
+    background-color: var(--firefly-color); 
+    border-radius: 50%;
+    box-shadow: 0 0 5px var(--firefly-color), 0 0 10px rgba(224, 242, 241, 0.5);
+    animation: floatLight 15s infinite ease-in-out alternate, glow 2s infinite alternate;
+    z-index: 0;
+}
+
+/* Posiciones aleatorias iniciales para las luciérnagas */
+body::before { top: 5%; left: 80%; animation-delay: 0s; transform: scale(1.1); }
+body::after { top: 90%; left: 10%; animation-delay: 2s; transform: scale(0.9); }
+.stage::before { top: 20%; left: 30%; animation-delay: 4s; transform: scale(1.2); }
+.stage::after { top: 70%; left: 70%; animation-delay: 6s; transform: scale(0.8); }
+.envelope .body::before { top: 15%; left: 50%; animation-delay: 8s; transform: scale(1); }
+.envelope .body::after { top: 85%; left: 25%; animation-delay: 10s; transform: scale(1.3); }
+.envelope .flap::before { top: 40%; left: 60%; animation-delay: 12s; transform: scale(0.7); }
+.envelope .flap::after { top: 60%; left: 40%; animation-delay: 14s; transform: scale(1.1); }
+
+@keyframes floatLight {
+    0% { transform: translate(0, 0) scale(var(--s, 1)); }
+    25% { transform: translate(calc(var(--r) * 50px), calc(var(--r) * -70px)) scale(var(--s, 0.95)); }
+    50% { transform: translate(calc(var(--r) * -30px), calc(var(--r) * 60px)) scale(var(--s, 1.05)); }
+    75% { transform: translate(calc(var(--r) * 70px), calc(var(--r) * -40px)) scale(var(--s, 0.9)); }
+    100% { transform: translate(0, 0) scale(var(--s, 1)); }
+}
+
+@keyframes glow {
+    0% { opacity: 0.6; box-shadow: 0 0 3px var(--firefly-color); }
+    100% { opacity: 1; box-shadow: 0 0 8px var(--firefly-color), 0 0 15px rgba(100, 255, 100, 0.3); } 
+}
+
+/* 3. Estilo para los Corazones flotantes (ROJOS y Dispersos) */
+.heart {
+    position: absolute;
+    font-size: calc(20px + var(--i) * 2px); 
+    color: #ff0000; /* Rojo vibrante */
+    animation: floatHeart var(--duration) infinite ease-in-out;
+    animation-delay: var(--delay);
+    z-index: 5;
+    opacity: 0.8;
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.7), 0 0 10px rgba(200, 0, 0, 0.5);
+    filter: none;
+    /* Variables para movimiento más aleatorio y disperso */
+    --duration: calc(12s + var(--i) * 1.5s); 
+    --x-float: calc(var(--i) * 10vw + 10vw); 
+    --y-float: calc(var(--i) * 15vh + 15vh);
+}
+
+@keyframes floatHeart {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.8; }
+    25% { transform: translate(calc(var(--x-float) * 0.5), calc(var(--y-float) * -1)) rotate(45deg); opacity: 0.9; }
+    50% { transform: translate(calc(var(--x-float) * -1), calc(var(--y-float) * -2.5)) rotate(90deg); opacity: 0.7; }
+    75% { transform: translate(calc(var(--x-float) * 1.5), calc(var(--y-float) * -4)) rotate(135deg); opacity: 0.9; }
+    100% { transform: translateY(-100vh) rotate(180deg); opacity: 0; }
+}
