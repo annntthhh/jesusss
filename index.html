@@ -9,29 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const hearts = document.querySelectorAll('.heart');
-            hearts.forEach(heart => {
-                // Genera un valor aleatorio para left (0-100vw)
-                const randomLeft = Math.random() * 95; // 0-95% para que no se salga
-                heart.style.setProperty('--start-left', `${randomLeft}vw`);
-                
-                // Genera un valor aleatorio para el delay (0-10s)
-                const randomDelay = Math.random() * 10;
-                heart.style.setProperty('--random-delay', `${randomDelay}s`);
-                
-                // Genera un valor aleatorio para la duración (10-20s)
-                const randomDuration = 10 + Math.random() * 10;
-                heart.style.setProperty('--random-duration', `${randomDuration}s`);
-
-                // Genera un valor aleatorio para el desplazamiento horizontal de la animación
-                const randomShift = (Math.random() - 0.5) * 200; // -100px a 100px
-                heart.style.setProperty('--random-shift-x', `${randomShift}px`);
-            });
-        });
-    </script>
 </head>
 <body>
     
@@ -42,11 +19,10 @@
     
     <p class="sender-top">De Ane.</p>
 
-    <div class="heart-container">
-        <div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div>
-        <div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div>
-        <div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div>
-        <div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div>
-        <div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div>
-        <div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div>
-        <div class="heart">❤️</div><div class="heart">❤️</div>
+    <div class="stage">
+        <div class="envelope">
+            <div class="flap"></div>
+            <div class="body">
+                <div class="card">
+                    
+                    <h1>Para mi
