@@ -8,9 +8,7 @@
     --text: #e6f1ff;            
     --card-bg: #f8f8f8;         /* Carta casi blanca */
     --card-text: #333333;       
-    --star-color: #ffda8a;      /* AMARILLO/DORADO TENUE PARA ESTRELLAS */
-    --cloud-color-light: rgba(255, 236, 179, 0.05); /* Color de nubes muy sutil y luminoso */
-    --cloud-color-dark: rgba(0, 0, 0, 0); /* Nubes casi transparentes */
+    --star-color: #ffda8a;      /* AMARILLO/DORADO TENUE */
     --heart-click-color: #ff0000; /* Color base para corazones de clic */
 }
 
@@ -20,6 +18,7 @@ html,body{height:100%}
 body{
     margin:0;
     font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif; 
+    background:var(--bg); /* Fondo base */
     color:var(--text);
     display:flex;
     align-items:center;
@@ -27,27 +26,7 @@ body{
     padding:32px;
     position:relative; 
     overflow: hidden; 
-
-    /* === FONDO DE CIELO NOCTURNO CON NUBES === */
-    background-color: var(--bg); /* Color base del cielo profundo */
-    background-image: 
-        /* Capa de nubes 1: Grandes, transparentes, amarillentas y moviéndose lentamente */
-        radial-gradient(ellipse at 10% 20%, var(--cloud-color-light) 0%, var(--cloud-color-dark) 80%),
-        radial-gradient(ellipse at 80% 90%, var(--cloud-color-light) 0%, var(--cloud-color-dark) 70%),
-        radial-gradient(ellipse at 40% 60%, var(--cloud-color-light) 0%, var(--cloud-color-dark) 90%),
-        radial-gradient(ellipse at 60% 30%, var(--cloud-color-light) 0%, var(--cloud-color-dark) 85%);
-    background-size: 800px 600px, 900px 700px, 700px 500px, 1000px 800px; /* Tamaños de las nubes */
-    background-position: 0 0, 50px 100px, 150px -50px, -100px 200px; /* Posiciones iniciales */
-    background-repeat: no-repeat;
-    animation: cloudMove 120s linear infinite alternate; /* Movimiento lento de nubes */
 }
-
-/* Animación de movimiento de nubes */
-@keyframes cloudMove {
-    0% { background-position: 0 0, 50px 100px, 150px -50px, -100px 200px; }
-    100% { background-position: -200px 100px, 150px 0, 50px 150px, 0px 50px; } /* Desplazamiento */
-}
-
 
 /* FIRMA "DE ANE" FLOTANTE ARRIBA DEL SOBRE */
 .sender-top {
@@ -79,11 +58,79 @@ body::before {
     animation: pulse 6s infinite alternate; /* Animación de pulso */
     pointer-events: none;
     z-index: -1;
+}
+@keyframes pulse {
+    0% { box-shadow: 0 0 180px 75px rgba(255, 236, 179, 0.15) inset; }
+    100% { box-shadow: 0 0 220px 85px rgba(255, 236, 179, 0.25) inset; } 
+}
 
-    /* ESTRELLAS DE 4 PUNTAS GENERADAS CON PSEUDO-ELEMENTO */
+/* CONTENEDOR DE ESTRELLAS DE 4 PUNTAS (Estrellas flotantes) */
+.star-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    overflow: hidden;
+    animation: moveStars 60s linear infinite; /* Movimiento LENTO */
+}
+
+/* Generación de las estrellas con box-shadow para crear la forma de 4 puntas */
+.star-container::before {
+    content: '';
+    position: absolute;
+    width: 2px; /* Tamaño del centro de la estrella */
+    height: 2px;
     background: transparent;
-    /* Genera las estrellas en una cuadrícula densa de 4 puntas */
+    border-radius: 50%; /* Esfera central invisible */
+    
+    /* Genera las estrellas con box-shadow: (horizontal, vertical, blur, spread, color) */
     box-shadow: 
+        /* Estrellas pequeñas y tenues */
+        100px 300px 0 0 var(--star-color),
+        150px 150px 0 0 var(--star-color),
+        200px 500px 0 0 var(--star-color),
+        300px 100px 0 0 var(--star-color),
+        400px 400px 0 0 var(--star-color),
+        550px 200px 0 0 var(--star-color),
+        700px 50px 0 0 var(--star-color),
+        800px 350px 0 0 var(--star-color),
+        950px 100px 0 0 var(--star-color),
+        
+        /* Estrellas de 4 puntas usando el truco de la sombra */
+        100px 300px 0 0 var(--star-color),  /* Centro */
+        101px 300px 0 0 var(--star-color),  /* Derecha */
+        99px 300px 0 0 var(--star-color),   /* Izquierda */
+        100px 301px 0 0 var(--star-color),  /* Abajo */
+        100px 299px 0 0 var(--star-color);  /* Arriba */
+
+    /* Repetir patrón para llenar la pantalla (solo ejemplo) */
+    /* Este es el truco para llenar toda la pantalla con muchas estrellas */
+    box-shadow: 
+        0px 0px 0 0 var(--star-color),
+        1px 0 0 0 var(--star-color),
+        -1px 0 0 0 var(--star-color),
+        0 1px 0 0 var(--star-color),
+        0 -1px 0 0 var(--star-color),
+        
+        /* Repeticiones para simular muchas estrellas */
+        10px 10px 0 0 var(--star-color),
+        11px 10px 0 0 var(--star-color),
+        9px 10px 0 0 var(--star-color),
+        10px 11px 0 0 var(--star-color),
+        10px 9px 0 0 var(--star-color),
+        
+        /* Más repeticiones */
+        20px 20px 0 0 var(--star-color),
+        21px 20px 0 0 var(--star-color),
+        19px 20px 0 0 var(--star-color),
+        20px 21px 0 0 var(--star-color),
+        20px 19px 0 0 var(--star-color);
+    
+    /* Generación con una función CSS para una cuadrícula densa de 4 puntas */
+    box-shadow: 
+        /* Genera las estrellas en una cuadrícula (x, y, blur, spread, color) */
         /* Estrellas en (0,0) y sus 4 puntas */
         0 0 0 0 var(--star-color), 1px 0 0 0 var(--star-color), -1px 0 0 0 var(--star-color), 0 1px 0 0 var(--star-color), 0 -1px 0 0 var(--star-color),
         /* Estrellas en (50, 50) y sus 4 puntas */
@@ -105,17 +152,16 @@ body::before {
         1050px 50px 0 0 var(--star-color), 1051px 50px 0 0 var(--star-color), 1049px 50px 0 0 var(--star-color), 1050px 51px 0 0 var(--star-color), 1050px 49px 0 0 var(--star-color),
         1150px 350px 0 0 var(--star-color), 1151px 350px 0 0 var(--star-color), 1149px 350px 0 0 var(--star-color), 1150px 351px 0 0 var(--star-color), 1150px 349px 0 0 var(--star-color);
     
-    transform: scale(0.6); /* Ajuste de escala para que se vean pequeñas */
-    animation: moveStars 60s linear infinite; /* Animación de movimiento lento de las estrellas */
-    opacity: 0.8; /* Ligeramente más opacas para que se vean bien */
+    /* Ajuste de escala para que se vean pequeñas */
+    transform: scale(0.6); 
 }
 
-
-/* Animación de movimiento lento de las estrellas (ahora en body::before) */
+/* Animación de movimiento lento de las estrellas */
 @keyframes moveStars {
-    0% { transform: translate(0, 0) scale(0.6); }
-    100% { transform: translate(150px, 150px) scale(0.6); } /* Movimiento lento en diagonal */
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(150px, 150px); } /* Movimiento lento en diagonal */
 }
+
 
 /* CONTENEDOR PRINCIPAL DEL SOBRE */
 .stage{ 
@@ -125,7 +171,7 @@ body::before {
     z-index: 10; 
 }
 
-/* El resto del CSS sigue igual... */
+/* El resto del CSS sigue igual... (Se han omitido para brevedad, pero reemplaza TODO con el código completo) */
 .envelope{
     position:relative;
     width:380px;
@@ -134,140 +180,9 @@ body::before {
     margin:0 auto 12px;
     cursor: pointer; 
 }
-
-.envelope .flap{
-    position:absolute;
-    left:20px;
-    right:20px;
-    top:0;
-    height:100px; 
-    background: linear-gradient(180deg, #28507c, var(--envelope)); 
-    border-radius:10px;
-    transform-origin:top center;
-    transform:rotateX(0deg); 
-    transition:transform 700ms cubic-bezier(.2,.9,.2,1); 
-    box-shadow: 0 18px 40px var(--shadow);
-    z-index:3;
-    clip-path: polygon(0 0, 100% 0, 50% 100%); 
-}
-
-.envelope .body{
-    position:absolute;
-    left:8px;
-    right:8px;
-    top:54px;
-    bottom:12px;
-    border-radius:12px;
-    perspective:800px;
-    transform-style:preserve-3d;
-    z-index:1;
-    background-color: var(--envelope);
-}
-
-.envelope .card{
-    position:absolute;
-    left:8px;
-    right:8px;
-    top:0;
-    bottom:0;
-    background-color: var(--card-bg); 
-    border-radius:12px;
-    padding:32px 24px;
-    box-shadow: 0 18px 46px rgba(0,0,0,0.1);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    transform:translateY(0); 
-    transition:transform 420ms ease; 
-    z-index:2;
-}
-
-.envelope h1{
-    margin:0 0 10px;
-    font-size:24px;
-    color:var(--card-text); 
-    letter-spacing:1px;
-    opacity: 0; 
-    transform: translateY(10px); 
-    transition: opacity 420ms ease 100ms, transform 420ms ease 100ms;
-}
-
-.message{
-    margin:10px 0 5px; 
-    font-size:18px;
-    opacity:0; 
-    transform:translateY(12px) scale(0.99);
-    transition:opacity 420ms ease 180ms, transform 420ms ease 180ms;
-    color: var(--card-text);
-    text-align: left; 
-    word-break: break-word; 
-    line-height: 1.3; 
-    width: 100%; 
-}
-
-.muaaa-text {
-    font-size: 20px; 
-    font-weight: bold;
-    color: #f06292; 
-    opacity: 0; 
-    transform: translateY(20px) scale(0.9);
-    transition: opacity 420ms ease 280ms, transform 420ms ease 280ms;
-    margin-top: 10px; 
-    text-shadow: 0 0 10px rgba(240, 98, 146, 0.7); 
-}
-
-.envelope.open .flap{ transform: rotateX(-180deg); } 
-.envelope.open .card{ transform: translateY(-22px); } 
-
-.envelope.open h1,
-.envelope.open .message,
-.envelope.open .muaaa-text {
-    opacity: 1; 
-    transform: translateY(0) scale(1); 
-}
-
-.envelope.open .muaaa-text {
-    text-align: center;
-}
-.envelope.open h1 {
-    text-align: center;
-}
-
-.hint{ margin-top:12px; color:#a9a9a9; font-size:14px; }
-@media (max-width:520px){
-    .envelope{ width:94%; height:240px; }
-    .message{ font-size:16px; }
-    .muaaa-text { font-size: 18px; }
-}
-
-.click-heart {
-    position: absolute;
-    font-size: 28px; 
-    color: var(--heart-click-color); 
-    pointer-events: none; 
-    transform: translate(-50%, -50%); 
-    animation: fadeAndRise 1.5s forwards ease-out; 
-    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.4); 
-    z-index: 9999; 
-    opacity: 0; 
-}
-
-@keyframes fadeAndRise {
-    0% {
-        opacity: 0; 
-        transform: translate(-50%, -50%) scale(0.5); 
-    }
-    10% {
-        opacity: 1; 
-        transform: translate(-50%, -60%) scale(1.1); 
-    }
-    80% {
-        opacity: 0.8; 
-        transform: translate(-50%, -200%) scale(0.9); 
-    }
-    100% {
-        opacity: 0; 
-        transform: translate(-50%, -300%) scale(0.7); 
-    }
-}
+/* ...El resto de estilos de Envelope, Card, Mensaje, Muaaa, etc., deben ser copiados del bloque de código completo que te proporciono */
+/*
+    Asegúrate de copiar el CSS COMPLETO que te proporcioné antes de este ajuste,
+    ya que aquí sólo muestro la sección modificada para las estrellas.
+    ¡Es fundamental que copies todo el bloque de código de arriba!
+*/
