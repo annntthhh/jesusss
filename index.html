@@ -12,7 +12,7 @@
 </head>
 <body>
     
-    <audio id="background-music" loop>
+    <div class="star-container"></div> <audio id="background-music" loop>
         <source src="./cuco.mp3" type="audio/mp3"> 
         Tu navegador no soporta el elemento de audio.
     </audio>
@@ -70,7 +70,7 @@
             clickHeart.textContent = '❤️'; 
             
             // ESTILO DIRECTO DE EMERGENCIA PARA VISIBILIDAD MÁXIMA
-            clickHeart.style.zIndex = '99999'; // Z-INDEX MÁXIMO
+            clickHeart.style.zIndex = '99999'; 
             clickHeart.style.position = 'absolute';
             
             clickHeart.style.left = e.clientX + 'px';
