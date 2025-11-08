@@ -19,6 +19,8 @@
     
     <p class="sender-top">De Ane.</p>
 
+    <div id="falling-stars-container"></div>
+
     <div class="stage">
         <div class="envelope">
             <div class="flap"></div>
@@ -39,7 +41,9 @@
     <script>
         const envelope = document.querySelector('.envelope');
         const music = document.getElementById('background-music');
+        const fallingStarsContainer = document.getElementById('falling-stars-container'); // NUEVO
         let musicPlayed = false;
+        let starsGenerated = false; // NUEVO: Para asegurar que las estrellas caigan una sola vez
 
         // Abre el sobre al pasar el mouse por encima (hover)
         envelope.addEventListener('mouseenter', function() {
@@ -48,40 +52,4 @@
             // Intenta reproducir la música SOLO la primera vez que se abre el sobre
             if (!musicPlayed) {
                 music.play().catch(error => {
-                    console.log("Música bloqueada por el navegador. Se necesita un clic.", error);
-                });
-                musicPlayed = true;
-            }
-        });
-        
-        // CÓDIGO OPCIONAL: Permite que la música inicie si hacen clic en CUALQUIER PARTE de la página
-        document.addEventListener('click', () => {
-            if (!musicPlayed) {
-                music.play().catch(error => {});
-                musicPlayed = true;
-            }
-        }, { once: true });
-
-
-        // Función para crear y animar corazones al hacer clic
-        document.addEventListener('click', function(e) {
-            const clickHeart = document.createElement('span');
-            clickHeart.classList.add('click-heart');
-            clickHeart.textContent = '❤️'; 
-            
-            // ESTILO DIRECTO DE EMERGENCIA PARA VISIBILIDAD MÁXIMA
-            clickHeart.style.zIndex = '99999'; // Z-INDEX MÁXIMO
-            clickHeart.style.position = 'absolute';
-            
-            clickHeart.style.left = e.clientX + 'px';
-            clickHeart.style.top = e.clientY + 'px';
-            document.body.appendChild(clickHeart);
-
-            // Eliminar el corazón después de su animación
-            clickHeart.addEventListener('animationend', () => {
-                clickHeart.remove();
-            });
-        });
-    </script>
-</body>
-</html>
+                    console.log("Música bloqueada por el
