@@ -12,6 +12,11 @@
 </head>
 <body>
 
+    <audio id="background-music" loop>
+        <source src="URL_DIRECTO_A_TU_ARCHIVO_MP3" type="audio/mp3">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
     <div class="heart" style="--i:1; --delay: 0s;">❤️</div>
     <div class="heart" style="--i:2; --delay: 1s;">❤️</div>
     <div class="heart" style="--i:3; --delay: 2s;">❤️</div>
@@ -51,11 +56,26 @@
     </div>
 
     <script>
-        document.getElementById('open-envelope').addEventListener('click', function() {
-            var envelope = document.querySelector('.envelope');
+        const openBtn = document.getElementById('open-envelope');
+        const envelope = document.querySelector('.envelope');
+        const music = document.getElementById('background-music');
+
+        // Función para iniciar la música al abrir el sobre
+        openBtn.addEventListener('click', function() {
             envelope.classList.add('open');
-            this.style.display = 'none'; // Oculta el botón después de abrir
+            this.style.display = 'none'; // Oculta el botón
+
+            // **IMPORTANTE**: Intenta iniciar la reproducción de la música
+            // Muchos navegadores modernos SÓLO permiten reproducir música después
+            // de una interacción del usuario (el click en el botón).
+            music.play().catch(error => {
+                console.log("Error al reproducir música, el navegador lo bloqueó hasta interacción del usuario.", error);
+                // Si falla, el usuario tendrá que tocar el botón de reproducir si lo pusiéramos visible.
+            });
         });
+
+        // NOTA: Para que la música funcione, debes reemplazar 
+        // "URL_DIRECTO_A_TU_ARCHIVO_MP3" en la línea 17 con un link directo al archivo MP3 de la canción.
     </script>
 </body>
 </html>
