@@ -9,6 +9,7 @@
     --card-bg: #f8f8f8;         /* Carta casi blanca */
     --card-text: #333333;       
     --star-color: #ffecb3;      /* Color de las estrellas/luz */
+    --heart-click-color: #ff0000; /* Color base para corazones de clic */
 }
 
 /* básico */
@@ -69,7 +70,7 @@ body::before {
     height:280px;
     perspective:1200px;
     margin:0 auto 12px;
-    cursor: pointer; /* Indica que se puede interactuar */
+    cursor: pointer; 
 }
 
 /* solapa superior */
@@ -132,33 +133,77 @@ body::before {
 }
 
 .message{
-    margin:10px 0 14px;
+    margin:10px 0 5px; /* Ajuste para dar espacio al Muaaa */
     font-size:18px;
     opacity:0;
     transform:translateY(12px) scale(0.99);
     transition:opacity 420ms ease 180ms, transform 420ms ease 180ms;
     color: var(--card-text);
     text-align:center;
-    /* Corrección para que el texto no esté tan separado y "Muaaa" se vea */
-    white-space: pre-line; /* Permite saltos de línea y respeta espacios */
-    word-break: break-word; /* Asegura que palabras largas se rompan */
-    line-height: 1.2; /* Espaciado entre líneas más ajustado */
-    padding-bottom: 20px; /* Asegura espacio para el Muaaa si se va muy abajo */
+    white-space: pre-line; 
+    word-break: break-word; 
+    line-height: 1.3; /* Espaciado entre líneas un poco más holgado */
 }
 
-/* pequeño brillo y heart flotante - ¡ELIMINADO! */
+/* Estilo para el "Muaaa" */
+.muaaa-text {
+    font-size: 20px; /* Tamaño del Muaaa */
+    font-weight: bold;
+    color: #f06292; /* Un rosa más cálido para el Muaaa */
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    transition: opacity 420ms ease 280ms, transform 420ms ease 280ms;
+    margin-top: 10px; /* Separación del mensaje principal */
+    text-shadow: 0 0 10px rgba(240, 98, 146, 0.7); /* Brillo tenue */
+}
+
+/* pequeño brillo y heart flotante - ELIMINADO */
 .envelope::after { content: none; }
 
 
-/* botones (mantener para evitar errores, pero no se usan) */
-.controls{ display:flex; gap:10px; align-items:center; justify-content:center; }
-.open-btn, .music-btn{
-    border:0;
-    background:var(--accent);
-    color:var(--bg);
-    padding:10px 18px;
-    border-radius:4px;
-    cursor:pointer;
-    font-weight:700;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.4);
-    transition
+/* estado abierto */
+.envelope.open .flap{ transform: rotateX(-180deg); }
+.envelope.open .card{ transform: translateY(-22px); }
+.envelope.open .message{ opacity:1; transform:translateY(0) scale(1); }
+.envelope.open .muaaa-text{ opacity:1; transform:translateY(0) scale(1); } /* Muestra el Muaaa */
+
+/* pista y responsive */
+.hint{ margin-top:12px; color:#a9a9a9; font-size:14px; }
+@media (max-width:520px){
+    .envelope{ width:94%; height:240px; }
+    .message{ font-size:16px; }
+    .muaaa-text { font-size: 18px; }
+}
+
+/* --- ANIMACIONES DE FONDO Y OBJETOS FLOTANTES --- */
+
+/* 1. Animación de Parpadeo Suave para la Luz de fondo */
+@keyframes pulse {
+    0% { box-shadow: 0 0 180px 75px rgba(255, 236, 179, 0.15) inset; }
+    100% { box-shadow: 0 0 220px 85px rgba(255, 236, 179, 0.25) inset; } 
+}
+
+/* 2. Estrellas/Luciérnagas */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, var(--star-color) 1px, transparent 1.5px) repeat,
+                radial-gradient(circle, var(--star-color) 0.5px, transparent 1px) repeat;
+    background-size: 150px 150px, 80px 80px;
+    background-position: 0 0, 40px 40px;
+    animation: starTwinkle 30s linear infinite;
+    z-index: -2;
+    opacity: 0.7;
+}
+
+@keyframes starTwinkle {
+    0% { background-position: 0 0, 40px 40px; }
+    100% { background-position: 150px 150px, 120px 120px; }
+}
+
+/* 3. Estilo para los Corazones flotantes (ROJOS, Varios Tamaños y Flotación Multidireccional) */
+.heart-container {
