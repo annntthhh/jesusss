@@ -11,7 +11,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
+    
+    <audio id="background-music" loop>
+        <source src="./cuco.mp3" type="audio/mp3"> 
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+    
     <p class="sender-top">De Ane.</p>
 
     <div class="heart-container">
@@ -30,7 +35,8 @@
         <div class="heart" style="--i:13; --delay: 6.8s;">❤️</div>
         <div class="heart" style="--i:14; --delay: 8.3s;">❤️</div>
         <div class="heart" style="--i:15; --delay: 9.8s;">❤️</div>
-        <div class="heart" style="--i:16; --delay: 0s;">❤️</div> <div class="heart" style="--i:17; --delay: 1.2s;">❤️</div>
+        <div class="heart" style="--i:16; --delay: 0s;">❤️</div> 
+        <div class="heart" style="--i:17; --delay: 1.2s;">❤️</div>
         <div class="heart" style="--i:18; --delay: 2.4s;">❤️</div>
         <div class="heart" style="--i:19; --delay: 3.6s;">❤️</div>
         <div class="heart" style="--i:20; --delay: 4.8s;">❤️</div>
@@ -42,4 +48,47 @@
             <div class="body">
                 <div class="card">
                     
-                    <h1>Para mi negro precioso</h1>
+                    <h1>Para mi negro precioso</h1> 
+                    <p class="message">
+                        Te amo muchomuchisimomuchisisisimodemasiadoinfinoultramegaetc
+                        
+                        mi amor bello, hombre de mi vida, negro precioso, mi corazon, mi todo.
+                        
+                        Muaaa
+                    </p>
+                    
+                </div>
+            </div>
+        </div>
+        <p class="hint">Pasa el mouse sobre el sobre para ver el mensaje.</p> 
+    </div>
+
+    <script>
+        const envelope = document.querySelector('.envelope');
+        const music = document.getElementById('background-music');
+        let musicPlayed = false;
+
+        // Abre el sobre al pasar el mouse por encima (hover)
+        envelope.addEventListener('mouseenter', function() {
+            envelope.classList.add('open');
+            
+            // Intenta reproducir la música SOLO la primera vez que se abre el sobre
+            if (!musicPlayed) {
+                music.play().catch(error => {
+                    console.log("Música bloqueada por el navegador. Se necesita un clic.", error);
+                });
+                musicPlayed = true;
+            }
+        });
+        
+        // CÓDIGO OPCIONAL: Permite que la música inicie si hacen clic en CUALQUIER PARTE de la página
+        document.addEventListener('click', () => {
+            if (!musicPlayed) {
+                music.play().catch(error => {});
+                musicPlayed = true;
+            }
+        }, { once: true });
+        
+    </script>
+</body>
+</html>
