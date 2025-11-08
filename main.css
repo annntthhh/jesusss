@@ -8,7 +8,9 @@
     --text: #e6f1ff;            
     --card-bg: #f8f8f8;         /* Carta casi blanca */
     --card-text: #333333;       
-    --star-color: #ffda8a;      /* AMARILLO/DORADO TENUE */
+    --star-color: #ffda8a;      /* AMARILLO/DORADO TENUE PARA ESTRELLAS */
+    --cloud-color-light: rgba(255, 236, 179, 0.05); /* Color de nubes muy sutil y luminoso */
+    --cloud-color-dark: rgba(0, 0, 0, 0); /* Nubes casi transparentes */
     --heart-click-color: #ff0000; /* Color base para corazones de clic */
 }
 
@@ -18,7 +20,6 @@ html,body{height:100%}
 body{
     margin:0;
     font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif; 
-    background:var(--bg); /* Fondo base */
     color:var(--text);
     display:flex;
     align-items:center;
@@ -26,163 +27,11 @@ body{
     padding:32px;
     position:relative; 
     overflow: hidden; 
-}
 
-/* FIRMA "DE ANE" FLOTANTE ARRIBA DEL SOBRE */
-.sender-top {
-    position: absolute;
-    top: 50px; 
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--accent); 
-    text-shadow: 0 0 15px rgba(255, 236, 179, 0.9); 
-    z-index: 100;
-    animation: pulseText 3s infinite alternate; 
-}
-@keyframes pulseText {
-    0% { opacity: 0.8; transform: translateX(-50%) scale(1); }
-    100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
-}
-
-/* EFECTO DE LUZ TENUE (AURA MÁGICA) */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    box-shadow: 0 0 200px 80px rgba(255, 236, 179, 0.1) inset; /* Luz central */
-    animation: pulse 6s infinite alternate; /* Animación de pulso */
-    pointer-events: none;
-    z-index: -1;
-}
-@keyframes pulse {
-    0% { box-shadow: 0 0 180px 75px rgba(255, 236, 179, 0.15) inset; }
-    100% { box-shadow: 0 0 220px 85px rgba(255, 236, 179, 0.25) inset; } 
-}
-
-/* CONTENEDOR DE ESTRELLAS DE 4 PUNTAS (Estrellas flotantes) */
-.star-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -2;
-    overflow: hidden;
-    animation: moveStars 60s linear infinite; /* Movimiento LENTO */
-}
-
-/* Generación de las estrellas con box-shadow para crear la forma de 4 puntas */
-.star-container::before {
-    content: '';
-    position: absolute;
-    width: 2px; /* Tamaño del centro de la estrella */
-    height: 2px;
-    background: transparent;
-    border-radius: 50%; /* Esfera central invisible */
-    
-    /* Genera las estrellas con box-shadow: (horizontal, vertical, blur, spread, color) */
-    box-shadow: 
-        /* Estrellas pequeñas y tenues */
-        100px 300px 0 0 var(--star-color),
-        150px 150px 0 0 var(--star-color),
-        200px 500px 0 0 var(--star-color),
-        300px 100px 0 0 var(--star-color),
-        400px 400px 0 0 var(--star-color),
-        550px 200px 0 0 var(--star-color),
-        700px 50px 0 0 var(--star-color),
-        800px 350px 0 0 var(--star-color),
-        950px 100px 0 0 var(--star-color),
-        
-        /* Estrellas de 4 puntas usando el truco de la sombra */
-        100px 300px 0 0 var(--star-color),  /* Centro */
-        101px 300px 0 0 var(--star-color),  /* Derecha */
-        99px 300px 0 0 var(--star-color),   /* Izquierda */
-        100px 301px 0 0 var(--star-color),  /* Abajo */
-        100px 299px 0 0 var(--star-color);  /* Arriba */
-
-    /* Repetir patrón para llenar la pantalla (solo ejemplo) */
-    /* Este es el truco para llenar toda la pantalla con muchas estrellas */
-    box-shadow: 
-        0px 0px 0 0 var(--star-color),
-        1px 0 0 0 var(--star-color),
-        -1px 0 0 0 var(--star-color),
-        0 1px 0 0 var(--star-color),
-        0 -1px 0 0 var(--star-color),
-        
-        /* Repeticiones para simular muchas estrellas */
-        10px 10px 0 0 var(--star-color),
-        11px 10px 0 0 var(--star-color),
-        9px 10px 0 0 var(--star-color),
-        10px 11px 0 0 var(--star-color),
-        10px 9px 0 0 var(--star-color),
-        
-        /* Más repeticiones */
-        20px 20px 0 0 var(--star-color),
-        21px 20px 0 0 var(--star-color),
-        19px 20px 0 0 var(--star-color),
-        20px 21px 0 0 var(--star-color),
-        20px 19px 0 0 var(--star-color);
-    
-    /* Generación con una función CSS para una cuadrícula densa de 4 puntas */
-    box-shadow: 
-        /* Genera las estrellas en una cuadrícula (x, y, blur, spread, color) */
-        /* Estrellas en (0,0) y sus 4 puntas */
-        0 0 0 0 var(--star-color), 1px 0 0 0 var(--star-color), -1px 0 0 0 var(--star-color), 0 1px 0 0 var(--star-color), 0 -1px 0 0 var(--star-color),
-        /* Estrellas en (50, 50) y sus 4 puntas */
-        50px 50px 0 0 var(--star-color), 51px 50px 0 0 var(--star-color), 49px 50px 0 0 var(--star-color), 50px 51px 0 0 var(--star-color), 50px 49px 0 0 var(--star-color),
-        /* Estrellas en (100, 100) y sus 4 puntas */
-        100px 100px 0 0 var(--star-color), 101px 100px 0 0 var(--star-color), 99px 100px 0 0 var(--star-color), 100px 101px 0 0 var(--star-color), 100px 99px 0 0 var(--star-color),
-        /* Más estrellas para llenar la pantalla (simulando un cielo) */
-        150px 200px 0 0 var(--star-color), 151px 200px 0 0 var(--star-color), 149px 200px 0 0 var(--star-color), 150px 201px 0 0 var(--star-color), 150px 199px 0 0 var(--star-color),
-        250px 100px 0 0 var(--star-color), 251px 100px 0 0 var(--star-color), 249px 100px 0 0 var(--star-color), 250px 101px 0 0 var(--star-color), 250px 99px 0 0 var(--star-color),
-        350px 300px 0 0 var(--star-color), 351px 300px 0 0 var(--star-color), 349px 300px 0 0 var(--star-color), 350px 301px 0 0 var(--star-color), 350px 299px 0 0 var(--star-color),
-        450px 50px 0 0 var(--star-color), 451px 50px 0 0 var(--star-color), 449px 50px 0 0 var(--star-color), 450px 51px 0 0 var(--star-color), 450px 49px 0 0 var(--star-color),
-        550px 250px 0 0 var(--star-color), 551px 250px 0 0 var(--star-color), 549px 250px 0 0 var(--star-color), 550px 251px 0 0 var(--star-color), 550px 249px 0 0 var(--star-color),
-        650px 400px 0 0 var(--star-color), 651px 400px 0 0 var(--star-color), 649px 400px 0 0 var(--star-color), 650px 401px 0 0 var(--star-color), 650px 399px 0 0 var(--star-color),
-        750px 150px 0 0 var(--star-color), 751px 150px 0 0 var(--star-color), 749px 150px 0 0 var(--star-color), 750px 151px 0 0 var(--star-color), 750px 149px 0 0 var(--star-color),
-        850px 300px 0 0 var(--star-color), 851px 300px 0 0 var(--star-color), 849px 300px 0 0 var(--star-color), 850px 301px 0 0 var(--star-color), 850px 299px 0 0 var(--star-color),
-        950px 450px 0 0 var(--star-color), 951px 450px 0 0 var(--star-color), 949px 450px 0 0 var(--star-color), 950px 451px 0 0 var(--star-color), 950px 449px 0 0 var(--star-color),
-        
-        /* Más allá de la pantalla inicial para el movimiento */
-        1050px 50px 0 0 var(--star-color), 1051px 50px 0 0 var(--star-color), 1049px 50px 0 0 var(--star-color), 1050px 51px 0 0 var(--star-color), 1050px 49px 0 0 var(--star-color),
-        1150px 350px 0 0 var(--star-color), 1151px 350px 0 0 var(--star-color), 1149px 350px 0 0 var(--star-color), 1150px 351px 0 0 var(--star-color), 1150px 349px 0 0 var(--star-color);
-    
-    /* Ajuste de escala para que se vean pequeñas */
-    transform: scale(0.6); 
-}
-
-/* Animación de movimiento lento de las estrellas */
-@keyframes moveStars {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(150px, 150px); } /* Movimiento lento en diagonal */
-}
-
-
-/* CONTENEDOR PRINCIPAL DEL SOBRE */
-.stage{ 
-    text-align:center; 
-    max-width:520px; 
-    width:100%; 
-    z-index: 10; 
-}
-
-/* El resto del CSS sigue igual... (Se han omitido para brevedad, pero reemplaza TODO con el código completo) */
-.envelope{
-    position:relative;
-    width:380px;
-    height:280px;
-    perspective:1200px; 
-    margin:0 auto 12px;
-    cursor: pointer; 
-}
-/* ...El resto de estilos de Envelope, Card, Mensaje, Muaaa, etc., deben ser copiados del bloque de código completo que te proporciono */
-/*
-    Asegúrate de copiar el CSS COMPLETO que te proporcioné antes de este ajuste,
-    ya que aquí sólo muestro la sección modificada para las estrellas.
-    ¡Es fundamental que copies todo el bloque de código de arriba!
-*/
+    /* === FONDO DE CIELO NOCTURNO CON NUBES === */
+    background-color: var(--bg); /* Color base del cielo profundo */
+    background-image: 
+        /* Capa de nubes 1: Grandes, transparentes, amarillentas y moviéndose lentamente */
+        radial-gradient(ellipse at 10% 20%, var(--cloud-color-light) 0%, var(--cloud-color-dark) 80%),
+        radial-gradient(ellipse at 80% 90%, var(--cloud-color-light) 0%, var(--cloud-color-dark) 70%),
+        radial-gradient(ellipse at 40% 60%, var(--cloud-color-
