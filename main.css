@@ -1,30 +1,30 @@
-/* --- DISEÑO FINAL: AZUL REY, CARTA BLANCA Y EFECTOS MÁGICOS --- */
+/* --- DISEÑO FINAL: NOCHE MÁGICA Y CORAZONES FLOTANTES --- */
 
 :root{
-  --bg: #1c3d79;            /* ¡AZUL REY para el fondo! */
-  --envelope: #2e5a9c;      
-  --accent: #ffeb3b;        /* AMARILLO VIVO */
-  --shadow: rgba(0,0,0,0.6); 
-  --text: #e6f1ff;          
-  --card-bg: #ffffff;       /* ¡CARTA BLANCA PURA! */
-  --card-text: #333333;     
-  --firefly-color: #e0f2f1; /* Blanco/Verde tenue para luciérnagas */
+    --bg: #0d1a2f;              /* AZUL OSCURO PROFUNDO (Noche) */
+    --envelope: #1b3a62;        /* Azul de la noche para el sobre */
+    --accent: #ffecb3;          /* Dorado/Crema tenue para brillo */
+    --shadow: rgba(0,0,0,0.8);
+    --text: #e6f1ff;            
+    --card-bg: #f8f8f8;         /* Carta casi blanca */
+    --card-text: #333333;       
+    --star-color: #ffecb3;      /* Color de las estrellas/luz */
 }
 
 /* básico */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
-  margin:0;
-  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif; 
-  background:var(--bg);
-  color:var(--text);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:32px;
-  position:relative; 
-  overflow: hidden;
+    margin:0;
+    font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif; 
+    background:var(--bg);
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px;
+    position:relative; 
+    overflow: hidden; /* Oculta cualquier cosa que se salga de la pantalla */
 }
 
 /* FIRMA "DE ANE" FLOTANTE ARRIBA DEL SOBRE */
@@ -36,16 +36,16 @@ body{
     font-size: 28px;
     font-weight: 700;
     color: var(--accent); 
-    text-shadow: 0 0 10px rgba(255, 235, 59, 0.7);
+    text-shadow: 0 0 15px rgba(255, 236, 179, 0.9); /* Sombra dorada intensa */
     z-index: 100;
     animation: pulseText 3s infinite alternate; 
 }
 @keyframes pulseText {
     0% { opacity: 0.8; transform: translateX(-50%) scale(1); }
-    100% { opacity: 1; transform: translateX(-50%) scale(1.03); }
+    100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
 }
 
-/* EFECTO DE LUZ TENUE Y PARPADEO */
+/* EFECTO DE LUZ TENUE (como un aura mágica) */
 body::before {
     content: '';
     position: fixed;
@@ -53,8 +53,9 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    box-shadow: 0 0 150px 80px rgba(255, 235, 59, 0.15) inset; 
-    animation: pulse 4s infinite alternate; 
+    /* Aura dorada suave y que parpadea */
+    box-shadow: 0 0 200px 80px rgba(255, 236, 179, 0.1) inset; 
+    animation: pulse 6s infinite alternate; 
     pointer-events: none;
     z-index: -1;
 }
@@ -64,116 +65,121 @@ body::before {
 
 /* SOBRE: estructura */
 .envelope{
-  position:relative;
-  width:380px;
-  height:280px;
-  perspective:1200px;
-  margin:0 auto 12px;
+    position:relative;
+    width:380px;
+    height:280px;
+    perspective:1200px;
+    margin:0 auto 12px;
 }
 
 /* solapa superior */
 .envelope .flap{
-  position:absolute;
-  left:20px;
-  right:20px;
-  top:0;
-  height:100px; 
-  background: linear-gradient(180deg, #3867b3, var(--envelope));
-  border-radius:10px;
-  transform-origin:top center;
-  transform:rotateX(0deg);
-  transition:transform 700ms cubic-bezier(.2,.9,.2,1);
-  box-shadow: 0 18px 40px var(--shadow);
-  z-index:3;
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
+    position:absolute;
+    left:20px;
+    right:20px;
+    top:0;
+    height:100px; 
+    background: linear-gradient(180deg, #28507c, var(--envelope));
+    border-radius:10px;
+    transform-origin:top center;
+    transform:rotateX(0deg);
+    transition:transform 700ms cubic-bezier(.2,.9,.2,1);
+    box-shadow: 0 18px 40px var(--shadow);
+    z-index:3;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 
 /* cuerpo del sobre */
 .envelope .body{
-  position:absolute;
-  left:8px;
-  right:8px;
-  top:54px;
-  bottom:12px;
-  border-radius:12px;
-  perspective:800px;
-  transform-style:preserve-3d;
-  z-index:1;
-  background-color: var(--envelope);
+    position:absolute;
+    left:8px;
+    right:8px;
+    top:54px;
+    bottom:12px;
+    border-radius:12px;
+    perspective:800px;
+    transform-style:preserve-3d;
+    z-index:1;
+    background-color: var(--envelope);
 }
 
 /* tarjeta interior */
 .envelope .card{
-  position:absolute;
-  left:8px;
-  right:8px;
-  top:0;
-  bottom:0;
-  background-color: var(--card-bg); 
-  border-radius:12px;
-  padding:32px 24px;
-  box-shadow: 0 18px 46px rgba(0,0,0,0.1);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  transform:translateY(0);
-  transition:transform 420ms ease, opacity 300ms ease;
-  z-index:2;
-  background-image: none;
-  background-repeat: none;
+    position:absolute;
+    left:8px;
+    right:8px;
+    top:0;
+    bottom:0;
+    background-color: var(--card-bg); 
+    border-radius:12px;
+    padding:32px 24px;
+    box-shadow: 0 18px 46px rgba(0,0,0,0.1);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    transform:translateY(0);
+    transition:transform 420ms ease, opacity 300ms ease;
+    z-index:2;
 }
 
 /* encabezado y mensaje */
 .envelope h1{
-  margin:0 0 10px;
-  font-size:24px;
-  color:var(--card-text); 
-  letter-spacing:1px;
+    margin:0 0 10px;
+    font-size:24px;
+    color:var(--card-text); 
+    letter-spacing:1px;
 }
 
 .message{
-  margin:10px 0 14px;
-  font-size:18px;
-  opacity:0;
-  transform:translateY(12px) scale(0.99);
-  transition:opacity 420ms ease 180ms, transform 420ms ease 180ms;
-  color: var(--card-text);
-  text-align:center;
-  white-space:pre-wrap;
-  word-break:break-word;
-  line-height:1.4;
+    margin:10px 0 14px;
+    font-size:18px;
+    opacity:0;
+    transform:translateY(12px) scale(0.99);
+    transition:opacity 420ms ease 180ms, transform 420ms ease 180ms;
+    color: var(--card-text);
+    text-align:center;
+    white-space:pre-wrap;
+    word-break:break-word;
+    line-height:1.4;
 }
 
 /* pequeño brillo y heart flotante */
 .envelope::after{
-  content:'';
-  position:absolute;
-  right:18px;
-  top:18px;
-  width:48px;
-  height:48px;
-  background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(255,255,255,0));
-  border-radius:50%;
-  z-index:4;
+    content:'';
+    position:absolute;
+    right:18px;
+    top:18px;
+    width:48px;
+    height:48px;
+    /* Efecto de sello o brillo mágico en la esquina */
+    background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7), rgba(255,255,255,0));
+    border-radius:50%;
+    z-index:4;
+    animation: glowEffect 3s infinite alternate;
+}
+
+@keyframes glowEffect {
+    0% { transform: scale(1); opacity: 0.7; }
+    100% { transform: scale(1.1); opacity: 1; }
 }
 
 /* botones */
 .controls{ display:flex; gap:10px; align-items:center; justify-content:center; }
 .open-btn, .music-btn{
-  border:0;
-  background:var(--accent);
-  color:var(--bg);
-  padding:10px 18px;
-  border-radius:4px;
-  cursor:pointer;
-  font-weight:700;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease;
+    border:0;
+    background:var(--accent);
+    color:var(--bg);
+    padding:10px 18px;
+    border-radius:4px;
+    cursor:pointer;
+    font-weight:700;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+    transition: background-color 0.3s ease;
 }
 
 .open-btn:hover, .music-btn:hover {
-    background: #ffd700; 
+    background: #ffe082; 
 }
 
 /* estado abierto */
@@ -182,81 +188,73 @@ body::before {
 .envelope.open .message{ opacity:1; transform:translateY(0) scale(1); }
 
 /* pista y responsive */
-.hint{ margin-top:12px; color:#95a5a6; font-size:14px; }
+.hint{ margin-top:12px; color:#a9a9a9; font-size:14px; }
 @media (max-width:520px){
-  .envelope{ width:94%; height:240px; }
-  .message{ font-size:16px; }
+    .envelope{ width:94%; height:240px; }
+    .message{ font-size:16px; }
 }
 
 /* --- ANIMACIONES DE FONDO Y OBJETOS FLOTANTES --- */
 
-/* 1. Animación de Parpadeo Suave para la Luz */
+/* 1. Animación de Parpadeo Suave para la Luz de fondo */
 @keyframes pulse {
-    0% { opacity: 0.95; }
-    100% { opacity: 1; box-shadow: 0 0 120px 70px rgba(255, 235, 59, 0.3) inset; } 
+    0% { box-shadow: 0 0 180px 75px rgba(255, 236, 179, 0.15) inset; }
+    100% { box-shadow: 0 0 220px 85px rgba(255, 236, 179, 0.25) inset; } 
 }
 
-/* 2. Luciérnagas BLANCAS/VERDES (MUCHAS, Titilan y Flotan por toda la pantalla) */
-/* Generamos muchas luciérnagas con pseudoelementos */
-body::before, body::after,
-.stage::before, .stage::after,
-.envelope .body::before, .envelope .body::after,
-.envelope .flap::before, .envelope .flap::after {
+/* 2. Estrellas/Luciérnagas (Usamos una técnica más simple y mágica) */
+body::after {
     content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Patrón de estrellas para un cielo nocturno */
+    background: radial-gradient(circle, var(--star-color) 1px, transparent 1.5px) repeat,
+                radial-gradient(circle, var(--star-color) 0.5px, transparent 1px) repeat;
+    background-size: 150px 150px, 80px 80px;
+    background-position: 0 0, 40px 40px;
+    animation: starTwinkle 30s linear infinite;
+    z-index: -2;
+    opacity: 0.7;
+}
+
+@keyframes starTwinkle {
+    0% { background-position: 0 0, 40px 40px; }
+    100% { background-position: 150px 150px, 120px 120px; }
+}
+
+/* 3. Estilo para los Corazones flotantes (ROJOS, Varios Tamaños y Flotación Multidireccional) */
+.heart-container {
     position: absolute;
-    width: 2px;
-    height: 2px;
-    background-color: var(--firefly-color); 
-    border-radius: 50%;
-    box-shadow: 0 0 5px var(--firefly-color), 0 0 10px rgba(224, 242, 241, 0.5);
-    animation: floatLight 15s infinite ease-in-out alternate, glow 2s infinite alternate;
-    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
 }
 
-/* Posiciones aleatorias iniciales para las luciérnagas */
-body::before { top: 5%; left: 80%; animation-delay: 0s; transform: scale(1.1); }
-body::after { top: 90%; left: 10%; animation-delay: 2s; transform: scale(0.9); }
-.stage::before { top: 20%; left: 30%; animation-delay: 4s; transform: scale(1.2); }
-.stage::after { top: 70%; left: 70%; animation-delay: 6s; transform: scale(0.8); }
-.envelope .body::before { top: 15%; left: 50%; animation-delay: 8s; transform: scale(1); }
-.envelope .body::after { top: 85%; left: 25%; animation-delay: 10s; transform: scale(1.3); }
-.envelope .flap::before { top: 40%; left: 60%; animation-delay: 12s; transform: scale(0.7); }
-.envelope .flap::after { top: 60%; left: 40%; animation-delay: 14s; transform: scale(1.1); }
-
-@keyframes floatLight {
-    0% { transform: translate(0, 0) scale(var(--s, 1)); }
-    25% { transform: translate(calc(var(--r) * 50px), calc(var(--r) * -70px)) scale(var(--s, 0.95)); }
-    50% { transform: translate(calc(var(--r) * -30px), calc(var(--r) * 60px)) scale(var(--s, 1.05)); }
-    75% { transform: translate(calc(var(--r) * 70px), calc(var(--r) * -40px)) scale(var(--s, 0.9)); }
-    100% { transform: translate(0, 0) scale(var(--s, 1)); }
-}
-
-@keyframes glow {
-    0% { opacity: 0.6; box-shadow: 0 0 3px var(--firefly-color); }
-    100% { opacity: 1; box-shadow: 0 0 8px var(--firefly-color), 0 0 15px rgba(100, 255, 100, 0.3); } 
-}
-
-/* 3. Estilo para los Corazones flotantes (ROJOS y Dispersos) */
 .heart {
     position: absolute;
-    font-size: calc(20px + var(--i) * 2px); 
+    /* Las variables CSS 'i' (índice) se usan para variación de tamaño y duración */
+    font-size: calc(24px + (var(--i) * 2px)); 
     color: #ff0000; /* Rojo vibrante */
-    animation: floatHeart var(--duration) infinite ease-in-out;
+    animation: floatHeart calc(10s + var(--i) * 0.8s) infinite linear;
     animation-delay: var(--delay);
     z-index: 5;
-    opacity: 0.8;
-    text-shadow: 0 0 5px rgba(255, 0, 0, 0.7), 0 0 10px rgba(200, 0, 0, 0.5);
-    filter: none;
-    /* Variables para movimiento más aleatorio y disperso */
-    --duration: calc(12s + var(--i) * 1.5s); 
-    --x-float: calc(var(--i) * 10vw + 10vw); 
-    --y-float: calc(var(--i) * 15vh + 15vh);
+    opacity: 0; /* Empiezan invisibles para que aparezcan correctamente desde abajo */
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.8), 0 0 15px rgba(200, 0, 0, 0.6);
+
+    /* Posición inicial aleatoria basada en el índice (i) */
+    left: calc(var(--i) * 6%); 
+    top: 100%; 
 }
 
 @keyframes floatHeart {
-    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.8; }
-    25% { transform: translate(calc(var(--x-float) * 0.5), calc(var(--y-float) * -1)) rotate(45deg); opacity: 0.9; }
-    50% { transform: translate(calc(var(--x-float) * -1), calc(var(--y-float) * -2.5)) rotate(90deg); opacity: 0.7; }
-    75% { transform: translate(calc(var(--x-float) * 1.5), calc(var(--y-float) * -4)) rotate(135deg); opacity: 0.9; }
-    100% { transform: translateY(-100vh) rotate(180deg); opacity: 0; }
+    0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
+    10% { opacity: 1; transform: translate(calc(var(--i) * -10px), -10vh) scale(0.8); } /* Aparece con opacidad */
+    50% { transform: translate(calc(var(--i) * 20px), -50vh) scale(1.1); opacity: 1; }
+    90% { transform: translate(calc(var(--i) * -5px), -90vh) scale(0.7); opacity: 0.5; }
+    100% { transform: translate(0, -100vh) scale(0.3); opacity: 0; } /* Desaparece arriba */
 }
