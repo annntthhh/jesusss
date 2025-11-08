@@ -20,75 +20,25 @@
     <p class="sender-top">De Ane.</p>
 
     <div class="heart-container">
-        <div class="heart" style="--i:1; --delay: 0s;">❤️</div>
-        <div class="heart" style="--i:2; --delay: 1.5s;">❤️</div>
-        <div class="heart" style="--i:3; --delay: 3s;">❤️</div>
-        <div class="heart" style="--i:4; --delay: 4.5s;">❤️</div>
-        <div class="heart" style="--i:5; --delay: 6s;">❤️</div>
-        <div class="heart" style="--i:6; --delay: 7.5s;">❤️</div>
-        <div class="heart" style="--i:7; --delay: 9s;">❤️</div>
-        <div class="heart" style="--i:8; --delay: 10.5s;">❤️</div>
-        <div class="heart" style="--i:9; --delay: 0.8s;">❤️</div>
-        <div class="heart" style="--i:10; --delay: 2.3s;">❤️</div>
-        <div class="heart" style="--i:11; --delay: 3.8s;">❤️</div>
-        <div class="heart" style="--i:12; --delay: 5.3s;">❤️</div>
-        <div class="heart" style="--i:13; --delay: 6.8s;">❤️</div>
-        <div class="heart" style="--i:14; --delay: 8.3s;">❤️</div>
-        <div class="heart" style="--i:15; --delay: 9.8s;">❤️</div>
-        <div class="heart" style="--i:16; --delay: 0s;">❤️</div> 
-        <div class="heart" style="--i:17; --delay: 1.2s;">❤️</div>
-        <div class="heart" style="--i:18; --delay: 2.4s;">❤️</div>
-        <div class="heart" style="--i:19; --delay: 3.6s;">❤️</div>
-        <div class="heart" style="--i:20; --delay: 4.8s;">❤️</div>
-    </div>
-    
-    <div class="stage">
-        <div class="envelope">
-            <div class="flap"></div>
-            <div class="body">
-                <div class="card">
-                    
-                    <h1>Para mi negro precioso</h1> 
-                    <p class="message">
-                        Te amo muchomuchisimomuchisisisimodemasiadoinfinoultramegaetc
-                        
-                        mi amor bello, hombre de mi vida, negro precioso, mi corazon, mi todo.
-                        
-                        Muaaa
-                    </p>
-                    
-                </div>
-            </div>
-        </div>
-        <p class="hint">Pasa el mouse sobre el sobre para ver el mensaje.</p> 
-    </div>
-
-    <script>
-        const envelope = document.querySelector('.envelope');
-        const music = document.getElementById('background-music');
-        let musicPlayed = false;
-
-        // Abre el sobre al pasar el mouse por encima (hover)
-        envelope.addEventListener('mouseenter', function() {
-            envelope.classList.add('open');
-            
-            // Intenta reproducir la música SOLO la primera vez que se abre el sobre
-            if (!musicPlayed) {
-                music.play().catch(error => {
-                    console.log("Música bloqueada por el navegador. Se necesita un clic.", error);
-                });
-                musicPlayed = true;
-            }
-        });
-        
-        // CÓDIGO OPCIONAL: Permite que la música inicie si hacen clic en CUALQUIER PARTE de la página
-        document.addEventListener('click', () => {
-            if (!musicPlayed) {
-                music.play().catch(error => {});
-                musicPlayed = true;
-            }
-        }, { once: true });
-        
-    </script>
-</body>
-</html>
+        <div class="heart" style="--i:1; --delay: 0s; --rand-x: 0.1; --rand-y: 0.9;">❤️</div>
+        <div class="heart" style="--i:2; --delay: 1.5s; --rand-x: 0.8; --rand-y: 0.3;">❤️</div>
+        <div class="heart" style="--i:3; --delay: 3s; --rand-x: 0.3; --rand-y: 0.7;">❤️</div>
+        <div class="heart" style="--i:4; --delay: 4.5s; --rand-x: 0.6; --rand-y: 0.1;">❤️</div>
+        <div class="heart" style="--i:5; --delay: 6s; --rand-x: 0.9; --rand-y: 0.5;">❤️</div>
+        <div class="heart" style="--i:6; --delay: 7.5s; --rand-x: 0.2; --rand-y: 0.8;">❤️</div>
+        <div class="heart" style="--i:7; --delay: 9s; --rand-x: 0.7; --rand-y: 0.2;">❤️</div>
+        <div class="heart" style="--i:8; --delay: 10.5s; --rand-x: 0.4; --rand-y: 0.6;">❤️</div>
+        <div class="heart" style="--i:9; --delay: 0.8s; --rand-x: 0.5; --rand-y: 0.4;">❤️</div>
+        <div class="heart" style="--i:10; --delay: 2.3s; --rand-x: 0.0; --rand-y: 0.7;">❤️</div>
+        <div class="heart" style="--i:11; --delay: 3.8s; --rand-x: 0.7; --rand-y: 0.1;">❤️</div>
+        <div class="heart" style="--i:12; --delay: 5.3s; --rand-x: 0.2; --rand-y: 0.6;">❤️</div>
+        <div class="heart" style="--i:13; --delay: 6.8s; --rand-x: 0.9; --rand-y: 0.3;">❤️</div>
+        <div class="heart" style="--i:14; --delay: 8.3s; --rand-x: 0.4; --rand-y: 0.8;">❤️</div>
+        <div class="heart" style="--i:15; --delay: 9.8s; --rand-x: 0.6; --rand-y: 0.0;">❤️</div>
+        <div class="heart" style="--i:16; --delay: 0s; --rand-x: 0.3; --rand-y: 0.5;">❤️</div> 
+        <div class="heart" style="--i:17; --delay: 1.2s; --rand-x: 0.8; --rand-y: 0.9;">❤️</div>
+        <div class="heart" style="--i:18; --delay: 2.4s; --rand-x: 0.1; --rand-y: 0.2;">❤️</div>
+        <div class="heart" style="--i:19; --delay: 3.6s; --rand-x: 0.5; --rand-y: 0.7;">❤️</div>
+        <div class="heart" style="--i:20; --delay: 4.8s; --rand-x: 0.0; --rand-y: 0.4;">❤️</div>
+        <div class="heart" style="--i:21; --delay: 0.5s; --rand-x: 0.9; --rand-y: 0.6;">❤️</div>
+        <div class
