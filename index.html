@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Mi Negro Hermoso - Noche Mágica</title>
+    <title>Para Mi Negro Precioso - Noche Mágica</title>
     <link rel="stylesheet" href="./main.css">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,8 +38,7 @@
             <div class="body">
                 <div class="card">
                     
-                    <h1>¡Para Mi Negro Precioso!</h1> 
-                    
+                    <h1>Para mi negro precioso</h1> 
                     <p class="message">
                         Te amo muchomuchisimomuchisisisimodemasiadoinfinoultramegaetc
                         
@@ -48,24 +47,26 @@
                         Muaaa
                     </p>
                     
-                    <div class="controls">
-                        <button class="open-btn" id="open-envelope">Abrir Sobrecito</button>
-                    </div>
                 </div>
             </div>
         </div>
-        <p class="hint">Toca el botón para ver el mensaje.</p>
+        <p class="hint">Pasa el mouse sobre el sobre para ver el mensaje.</p> 
     </div>
 
     <script>
-        const openBtn = document.getElementById('open-envelope');
         const envelope = document.querySelector('.envelope');
 
-        openBtn.addEventListener('click', function() {
+        // Abre el sobre al pasar el mouse por encima (hover)
+        envelope.addEventListener('mouseenter', function() {
             envelope.classList.add('open');
-            this.style.display = 'none'; // Oculta el botón
-            // ¡La lógica de la música fue removida!
         });
+
+        // Opcional: El sobre se cierra al quitar el mouse. Puedes quitar estas líneas si no lo quieres.
+        // envelope.addEventListener('mouseleave', function() {
+        //     envelope.classList.remove('open');
+        // });
+        
+        // CÓDIGO DE MÚSICA ELIMINADO
     </script>
 </body>
 </html>
