@@ -12,11 +12,6 @@
 </head>
 <body>
 
-    <audio id="background-music" loop>
-        <source src="URL_DIRECTO_A_TU_ARCHIVO_MP3" type="audio/mp3">
-        Tu navegador no soporta el elemento de audio.
-    </audio>
-
     <p class="sender-top">De Ane.</p>
 
     <div class="heart-container">
@@ -65,16 +60,11 @@
     <script>
         const openBtn = document.getElementById('open-envelope');
         const envelope = document.querySelector('.envelope');
-        const music = document.getElementById('background-music');
 
         openBtn.addEventListener('click', function() {
             envelope.classList.add('open');
             this.style.display = 'none'; // Oculta el botón
-
-            // Intenta reproducir la música
-            music.play().catch(error => {
-                console.log("Error al reproducir música, el navegador lo bloqueó hasta interacción del usuario.", error);
-            });
+            // ¡La lógica de la música fue removida!
         });
     </script>
 </body>
