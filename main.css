@@ -69,6 +69,7 @@ body::before {
     height:280px;
     perspective:1200px;
     margin:0 auto 12px;
+    cursor: pointer; /* Indica que se puede interactuar */
 }
 
 /* solapa superior */
@@ -143,24 +144,9 @@ body::before {
     line-height:1.4;
 }
 
-/* pequeño brillo y heart flotante */
-.envelope::after{
-    content:'';
-    position:absolute;
-    right:18px;
-    top:18px;
-    width:48px;
-    height:48px;
-    background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7), rgba(255,255,255,0));
-    border-radius:50%;
-    z-index:4;
-    animation: glowEffect 3s infinite alternate;
-}
+/* pequeño brillo y heart flotante - ¡ELIMINADO! */
+.envelope::after { content: none; }
 
-@keyframes glowEffect {
-    0% { transform: scale(1); opacity: 0.7; }
-    100% { transform: scale(1.1); opacity: 1; }
-}
 
 /* botones */
 .controls{ display:flex; gap:10px; align-items:center; justify-content:center; }
@@ -222,34 +208,50 @@ body::after {
     100% { background-position: 150px 150px, 120px 120px; }
 }
 
-/* 3. Estilo para los Corazones flotantes (ROJOS) */
+/* 3. Estilo para los Corazones flotantes (ROJOS, Varios Tamaños y Flotación Multidireccional) */
 .heart-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;
+    pointer-events: none; 
+    overflow: hidden; 
 }
 
 .heart {
     position: absolute;
-    font-size: calc(24px + (var(--i) * 2px)); 
-    color: #ff0000; /* Rojo vibrante */
-    animation: floatHeart calc(10s + var(--i) * 0.8s) infinite linear;
-    animation-delay: var(--delay);
+    font-size: calc(20px + (var(--i) * 2px)); 
+    color: #ff0000; 
+    animation: floatHeart calc(12s + var(--i) * 1s) infinite ease-in-out; 
+    animation-delay: calc(var(--delay) + var(--i) * 0.2s); 
     z-index: 5;
     opacity: 0; 
     text-shadow: 0 0 8px rgba(255, 0, 0, 0.8), 0 0 15px rgba(200, 0, 0, 0.6);
-
-    left: calc(var(--i) * 6%); 
-    top: 100%; 
 }
 
 @keyframes floatHeart {
-    0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
-    10% { opacity: 1; transform: translate(calc(var(--i) * -10px), -10vh) scale(0.8); } 
-    50% { transform: translate(calc(var(--i) * 20px), -50vh) scale(1.1); opacity: 1; }
-    90% { transform: translate(calc(var(--i) * -5px), -90vh) scale(0.7); opacity: 0.5; }
-    100% { transform: translate(0, -100vh) scale(0.3); opacity: 0; } 
+    0% { 
+        transform: translate(0, 0) scale(0.6) rotate(0deg); 
+        opacity: 0; 
+        left: calc(var(--i) * 5vw + 10vw + (var(--delay) * 5vw)); 
+        top: 100%; 
+    }
+    15% { 
+        opacity: 0.9; 
+        transform: translate(calc(var(--i) * -15px), -15vh) scale(0.9) rotate(calc(var(--i) * 5deg)); 
+    }
+    50% { 
+        opacity: 1; 
+        transform: translate(calc(var(--i) * 25px), -55vh) scale(1.2) rotate(calc(var(--i) * -10deg)); 
+    }
+    85% { 
+        opacity: 0.7; 
+        transform: translate(calc(var(--i) * -10px), -95vh) scale(0.8) rotate(calc(var(--i) * 8deg)); 
+    }
+    100% { 
+        transform: translate(0, -110vh) scale(0.4) rotate(calc(var(--i) * -5deg)); 
+        opacity: 0; 
+        left: calc(var(--i) * 8vw + 5vw + (var(--delay) * 3vw)); 
+    }
 }
