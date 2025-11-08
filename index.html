@@ -75,6 +75,7 @@
             clickHeart.classList.add('click-heart');
             clickHeart.textContent = '❤️'; 
             
+            // ESTILOS DE VISIBILIDAD MÁXIMA
             clickHeart.style.zIndex = '99999'; 
             clickHeart.style.position = 'absolute';
             
@@ -89,26 +90,23 @@
 
         // Función para generar y animar las estrellitas que caen
         function generateFallingStars() {
-            const numberOfStars = 30; // Cuántas estrellas caerán
+            const numberOfStars = 40; // Aumentamos la cantidad a 40 para que sea más visible
             
-            // Usamos las dimensiones de la ventana para que las estrellas caigan por toda la pantalla
-            const containerWidth = window.innerWidth;
+            const screenWidth = window.innerWidth;
 
             for (let i = 0; i < numberOfStars; i++) {
                 const star = document.createElement('span');
                 star.classList.add('falling-star');
-                star.textContent = '✦'; // Carácter de estrella
+                star.textContent = '✦'; 
                 
-                // Posicionamos la estrella aleatoriamente a lo ancho de la pantalla
-                star.style.left = Math.random() * containerWidth + 'px';
+                // Posicionamos la estrella aleatoriamente
+                star.style.left = Math.random() * screenWidth + 'px';
                 star.style.animationDelay = Math.random() * 1.5 + 's'; 
                 star.style.animationDuration = (Math.random() * 1.5 + 2) + 's'; 
                 star.style.fontSize = (Math.random() * 10 + 10) + 'px'; // Tamaño aleatorio
                 
-                // Agregamos la estrella directamente al body
                 document.body.appendChild(star); 
 
-                // Eliminamos la estrella después de su animación
                 star.addEventListener('animationend', () => {
                     star.remove();
                 });
