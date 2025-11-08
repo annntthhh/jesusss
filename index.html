@@ -70,7 +70,12 @@
         document.addEventListener('click', function(e) {
             const clickHeart = document.createElement('span');
             clickHeart.classList.add('click-heart');
-            clickHeart.textContent = '❤️'; // <-- ESTA ES LA LÍNEA QUE FALTABA
+            clickHeart.textContent = '❤️'; 
+            
+            // ESTILO DIRECTO DE EMERGENCIA PARA VISIBILIDAD MÁXIMA
+            clickHeart.style.zIndex = '99999'; // Z-INDEX MÁXIMO
+            clickHeart.style.position = 'absolute';
+            
             clickHeart.style.left = e.clientX + 'px';
             clickHeart.style.top = e.clientY + 'px';
             document.body.appendChild(clickHeart);
