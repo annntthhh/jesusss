@@ -139,16 +139,18 @@ body::before {
     transition:opacity 420ms ease 180ms, transform 420ms ease 180ms;
     color: var(--card-text);
     text-align:center;
-    white-space:pre-wrap;
-    word-break:break-word;
-    line-height:1.4;
+    /* Corrección para que el texto no esté tan separado y "Muaaa" se vea */
+    white-space: pre-line; /* Permite saltos de línea y respeta espacios */
+    word-break: break-word; /* Asegura que palabras largas se rompan */
+    line-height: 1.2; /* Espaciado entre líneas más ajustado */
+    padding-bottom: 20px; /* Asegura espacio para el Muaaa si se va muy abajo */
 }
 
 /* pequeño brillo y heart flotante - ¡ELIMINADO! */
 .envelope::after { content: none; }
 
 
-/* botones */
+/* botones (mantener para evitar errores, pero no se usan) */
 .controls{ display:flex; gap:10px; align-items:center; justify-content:center; }
 .open-btn, .music-btn{
     border:0;
@@ -159,99 +161,4 @@ body::before {
     cursor:pointer;
     font-weight:700;
     box-shadow: 0 6px 14px rgba(0,0,0,0.4);
-    transition: background-color 0.3s ease;
-}
-
-.open-btn:hover, .music-btn:hover {
-    background: #ffe082; 
-}
-
-/* estado abierto */
-.envelope.open .flap{ transform: rotateX(-180deg); }
-.envelope.open .card{ transform: translateY(-22px); }
-.envelope.open .message{ opacity:1; transform:translateY(0) scale(1); }
-
-/* pista y responsive */
-.hint{ margin-top:12px; color:#a9a9a9; font-size:14px; }
-@media (max-width:520px){
-    .envelope{ width:94%; height:240px; }
-    .message{ font-size:16px; }
-}
-
-/* --- ANIMACIONES DE FONDO Y OBJETOS FLOTANTES --- */
-
-/* 1. Animación de Parpadeo Suave para la Luz de fondo */
-@keyframes pulse {
-    0% { box-shadow: 0 0 180px 75px rgba(255, 236, 179, 0.15) inset; }
-    100% { box-shadow: 0 0 220px 85px rgba(255, 236, 179, 0.25) inset; } 
-}
-
-/* 2. Estrellas/Luciérnagas */
-body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, var(--star-color) 1px, transparent 1.5px) repeat,
-                radial-gradient(circle, var(--star-color) 0.5px, transparent 1px) repeat;
-    background-size: 150px 150px, 80px 80px;
-    background-position: 0 0, 40px 40px;
-    animation: starTwinkle 30s linear infinite;
-    z-index: -2;
-    opacity: 0.7;
-}
-
-@keyframes starTwinkle {
-    0% { background-position: 0 0, 40px 40px; }
-    100% { background-position: 150px 150px, 120px 120px; }
-}
-
-/* 3. Estilo para los Corazones flotantes (ROJOS, Varios Tamaños y Flotación Multidireccional) */
-.heart-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; 
-    overflow: hidden; 
-}
-
-.heart {
-    position: absolute;
-    font-size: calc(20px + (var(--i) * 2px)); 
-    color: #ff0000; 
-    animation: floatHeart calc(12s + var(--i) * 1s) infinite ease-in-out; 
-    animation-delay: calc(var(--delay) + var(--i) * 0.2s); 
-    z-index: 5;
-    opacity: 0; 
-    text-shadow: 0 0 8px rgba(255, 0, 0, 0.8), 0 0 15px rgba(200, 0, 0, 0.6);
-}
-
-@keyframes floatHeart {
-    0% { 
-        transform: translate(0, 0) scale(0.6) rotate(0deg); 
-        opacity: 0; 
-        left: calc(var(--i) * 5vw + 10vw + (var(--delay) * 5vw)); 
-        top: 100%; 
-    }
-    15% { 
-        opacity: 0.9; 
-        transform: translate(calc(var(--i) * -15px), -15vh) scale(0.9) rotate(calc(var(--i) * 5deg)); 
-    }
-    50% { 
-        opacity: 1; 
-        transform: translate(calc(var(--i) * 25px), -55vh) scale(1.2) rotate(calc(var(--i) * -10deg)); 
-    }
-    85% { 
-        opacity: 0.7; 
-        transform: translate(calc(var(--i) * -10px), -95vh) scale(0.8) rotate(calc(var(--i) * 8deg)); 
-    }
-    100% { 
-        transform: translate(0, -110vh) scale(0.4) rotate(calc(var(--i) * -5deg)); 
-        opacity: 0; 
-        left: calc(var(--i) * 8vw + 5vw + (var(--delay) * 3vw)); 
-    }
-}
+    transition
