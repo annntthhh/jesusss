@@ -9,6 +9,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hearts = document.querySelectorAll('.heart');
+            hearts.forEach(heart => {
+                // Genera un valor aleatorio para left (0-100vw)
+                const randomLeft = Math.random() * 95; // 0-95% para que no se salga
+                heart.style.setProperty('--start-left', `${randomLeft}vw`);
+                
+                // Genera un valor aleatorio para el delay (0-10s)
+                const randomDelay = Math.random() * 10;
+                heart.style.setProperty('--random-delay', `${randomDelay}s`);
+                
+                // Genera un valor aleatorio para la duración (10-20s)
+                const randomDuration = 10 + Math.random() * 10;
+                heart.style.setProperty('--random-duration', `${randomDuration}s`);
+
+                // Genera un valor aleatorio para el desplazamiento horizontal de la animación
+                const randomShift = (Math.random() - 0.5) * 200; // -100px a 100px
+                heart.style.setProperty('--random-shift-x', `${randomShift}px`);
+            });
+        });
+    </script>
 </head>
 <body>
     
@@ -20,20 +43,10 @@
     <p class="sender-top">De Ane.</p>
 
     <div class="heart-container">
-        <div class="heart" style="--i:1; --delay: 0s; --rand-x: 0.15; --rand-y: 0.85;">❤️</div>
-        <div class="heart" style="--i:2; --delay: 1.5s; --rand-x: 0.75; --rand-y: 0.25;">❤️</div>
-        <div class="heart" style="--i:3; --delay: 3s; --rand-x: 0.35; --rand-y: 0.75;">❤️</div>
-        <div class="heart" style="--i:4; --delay: 4.5s; --rand-x: 0.65; --rand-y: 0.15;">❤️</div>
-        <div class="heart" style="--i:5; --delay: 6s; --rand-x: 0.95; --rand-y: 0.55;">❤️</div>
-        <div class="heart" style="--i:6; --delay: 7.5s; --rand-x: 0.25; --rand-y: 0.88;">❤️</div>
-        <div class="heart" style="--i:7; --delay: 9s; --rand-x: 0.78; --rand-y: 0.22;">❤️</div>
-        <div class="heart" style="--i:8; --delay: 10.5s; --rand-x: 0.45; --rand-y: 0.65;">❤️</div>
-        <div class="heart" style="--i:9; --delay: 0.8s; --rand-x: 0.55; --rand-y: 0.45;">❤️</div>
-        <div class="heart" style="--i:10; --delay: 2.3s; --rand-x: 0.05; --rand-y: 0.77;">❤️</div>
-        <div class="heart" style="--i:11; --delay: 3.8s; --rand-x: 0.72; --rand-y: 0.18;">❤️</div>
-        <div class="heart" style="--i:12; --delay: 5.3s; --rand-x: 0.28; --rand-y: 0.62;">❤️</div>
-        <div class="heart" style="--i:13; --delay: 6.8s; --rand-x: 0.92; --rand-y: 0.38;">❤️</div>
-        <div class="heart" style="--i:14; --delay: 8.3s; --rand-x: 0.48; --rand-y: 0.82;">❤️</div>
-        <div class="heart" style="--i:15; --delay: 9.8s; --rand-x: 0.62; --rand-y: 0.08;">❤️</div>
-        <div class="heart" style="--i:16; --delay: 0s; --rand-x: 0.32; --rand-y: 0.58;">❤️</div> 
-        <div class="heart" style="--i:17; --delay: 1.2s; --rand-x: 0.88; --rand-y: 0.92
+        <div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div>
+        <div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div>
+        <div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div>
+        <div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div>
+        <div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div>
+        <div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div><div class="heart">❤️</div>
+        <div class="heart">❤️</div><div class="heart">❤️</div>
