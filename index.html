@@ -1,7 +1,44 @@
-<script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Mi Negro Precioso - Noche Mágica</title>
+    <link rel="stylesheet" href="./main.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <audio id="background-music" loop>
+        <source src="./cuco.mp3" type="audio/mp3"> 
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+    
+    <p class="sender-top">De Ane.</p>
+
+    <div class="stage">
+        <div class="envelope">
+            <div class="flap"></div>
+            <div class="body">
+                <div class="card">
+                    
+                    <h1>Para mi negro precioso</h1> 
+                    <p class="message">
+                        Te amo muchomuchisimomuchisisisimodemasiadoinfinoultramegaetc mi amor bello, hombre de mi vida, negro precioso, mi corazon, mi todo.
+                    </p>
+                    <p class="muaaa-text">Muaaa</p> 
+                </div>
+            </div>
+        </div>
+        <p class="hint">Pasa el mouse sobre el sobre para ver el mensaje.</p> 
+    </div>
+
+    <script>
         const envelope = document.querySelector('.envelope');
         const music = document.getElementById('background-music');
-        const fallingStarsContainer = document.getElementById('falling-stars-container'); 
         let musicPlayed = false;
         let starsGenerated = false; 
 
@@ -16,7 +53,7 @@
                 musicPlayed = true;
             }
 
-            // NUEVO: Generar las estrellitas al abrir el sobre
+            // Generar las estrellitas al abrir el sobre
             if (!starsGenerated) {
                 generateFallingStars();
                 starsGenerated = true; 
@@ -50,7 +87,7 @@
             });
         });
 
-        // REVISADO: Función para generar y animar las estrellitas que caen
+        // Función para generar y animar las estrellitas que caen
         function generateFallingStars() {
             const numberOfStars = 30; // Cuántas estrellas caerán
             
@@ -60,7 +97,7 @@
             for (let i = 0; i < numberOfStars; i++) {
                 const star = document.createElement('span');
                 star.classList.add('falling-star');
-                star.textContent = '✦'; 
+                star.textContent = '✦'; // Carácter de estrella
                 
                 // Posicionamos la estrella aleatoriamente a lo ancho de la pantalla
                 star.style.left = Math.random() * containerWidth + 'px';
@@ -68,7 +105,7 @@
                 star.style.animationDuration = (Math.random() * 1.5 + 2) + 's'; 
                 star.style.fontSize = (Math.random() * 10 + 10) + 'px'; // Tamaño aleatorio
                 
-                // Agregamos el contenedor al body para asegurar la visibilidad
+                // Agregamos la estrella directamente al body
                 document.body.appendChild(star); 
 
                 // Eliminamos la estrella después de su animación
