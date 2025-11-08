@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Mi Amor</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="stage">
+        <div class="envelope">
+            <div class="flap"></div>
+            <div class="body">
+                <div class="card">
+                    <h1>¡Para ti, mi negro hermoso!</h1>
+                    <p class="message">
+                        Aquí va tu mensaje de amor.
+                        Este es el espacio para decirle
+                        cuánto lo quieres, todos los días
+                        y con todo el cariño del mundo.
+                        
+                        ¡Eres mi persona favorita!
+                    </p>
+                    <div class="controls">
+                        <button class="open-btn" id="open-envelope">Abrir Sobrecito</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="hint">Toca el botón para ver el mensaje.</p>
+    </div>
+
+    <script>
+        document.getElementById('open-envelope').addEventListener('click', function() {
+            var envelope = document.querySelector('.envelope');
+            envelope.classList.add('open');
+            this.style.display = 'none'; // Oculta el botón después de abrir
+        });
+    </script>
+</body>
+</html>
