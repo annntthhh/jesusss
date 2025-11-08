@@ -24,7 +24,7 @@ body{
     justify-content:center;
     padding:32px;
     position:relative; 
-    overflow: hidden; /* Oculta cualquier cosa que se salga de la pantalla */
+    overflow: hidden; 
 }
 
 /* FIRMA "DE ANE" FLOTANTE ARRIBA DEL SOBRE */
@@ -36,7 +36,7 @@ body{
     font-size: 28px;
     font-weight: 700;
     color: var(--accent); 
-    text-shadow: 0 0 15px rgba(255, 236, 179, 0.9); /* Sombra dorada intensa */
+    text-shadow: 0 0 15px rgba(255, 236, 179, 0.9); 
     z-index: 100;
     animation: pulseText 3s infinite alternate; 
 }
@@ -53,7 +53,6 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Aura dorada suave y que parpadea */
     box-shadow: 0 0 200px 80px rgba(255, 236, 179, 0.1) inset; 
     animation: pulse 6s infinite alternate; 
     pointer-events: none;
@@ -152,7 +151,6 @@ body::before {
     top:18px;
     width:48px;
     height:48px;
-    /* Efecto de sello o brillo mágico en la esquina */
     background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7), rgba(255,255,255,0));
     border-radius:50%;
     z-index:4;
@@ -202,7 +200,7 @@ body::before {
     100% { box-shadow: 0 0 220px 85px rgba(255, 236, 179, 0.25) inset; } 
 }
 
-/* 2. Estrellas/Luciérnagas (Usamos una técnica más simple y mágica) */
+/* 2. Estrellas/Luciérnagas */
 body::after {
     content: '';
     position: fixed;
@@ -210,7 +208,6 @@ body::after {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Patrón de estrellas para un cielo nocturno */
     background: radial-gradient(circle, var(--star-color) 1px, transparent 1.5px) repeat,
                 radial-gradient(circle, var(--star-color) 0.5px, transparent 1px) repeat;
     background-size: 150px 150px, 80px 80px;
@@ -225,7 +222,7 @@ body::after {
     100% { background-position: 150px 150px, 120px 120px; }
 }
 
-/* 3. Estilo para los Corazones flotantes (ROJOS, Varios Tamaños y Flotación Multidireccional) */
+/* 3. Estilo para los Corazones flotantes (ROJOS) */
 .heart-container {
     position: absolute;
     top: 0;
@@ -237,24 +234,22 @@ body::after {
 
 .heart {
     position: absolute;
-    /* Las variables CSS 'i' (índice) se usan para variación de tamaño y duración */
     font-size: calc(24px + (var(--i) * 2px)); 
     color: #ff0000; /* Rojo vibrante */
     animation: floatHeart calc(10s + var(--i) * 0.8s) infinite linear;
     animation-delay: var(--delay);
     z-index: 5;
-    opacity: 0; /* Empiezan invisibles para que aparezcan correctamente desde abajo */
+    opacity: 0; 
     text-shadow: 0 0 8px rgba(255, 0, 0, 0.8), 0 0 15px rgba(200, 0, 0, 0.6);
 
-    /* Posición inicial aleatoria basada en el índice (i) */
     left: calc(var(--i) * 6%); 
     top: 100%; 
 }
 
 @keyframes floatHeart {
     0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
-    10% { opacity: 1; transform: translate(calc(var(--i) * -10px), -10vh) scale(0.8); } /* Aparece con opacidad */
+    10% { opacity: 1; transform: translate(calc(var(--i) * -10px), -10vh) scale(0.8); } 
     50% { transform: translate(calc(var(--i) * 20px), -50vh) scale(1.1); opacity: 1; }
     90% { transform: translate(calc(var(--i) * -5px), -90vh) scale(0.7); opacity: 0.5; }
-    100% { transform: translate(0, -100vh) scale(0.3); opacity: 0; } /* Desaparece arriba */
+    100% { transform: translate(0, -100vh) scale(0.3); opacity: 0; } 
 }
