@@ -9,6 +9,7 @@
     --card-bg: #f8f8f8;         /* Carta casi blanca */
     --card-text: #333333;       
     --star-color: #ffecb3;      /* Color de las estrellas/luz */
+    --heart-click-color: #ff0000; /* Color base para corazones de clic */
 }
 
 /* básico */
@@ -210,4 +211,37 @@ body::after {
     .envelope{ width:94%; height:240px; }
     .message{ font-size:16px; }
     .muaaa-text { font-size: 18px; }
+}
+
+
+/* --- Corazones al Hacer Clic (Lucecitas Mágicas) --- */
+.click-heart {
+    position: absolute;
+    font-size: 28px; /* Tamaño del corazón, un poco más grande */
+    color: #ff0000; /* Rojo vibrante */
+    pointer-events: none; /* Ignora clics en sí mismo para que no interfiera */
+    transform: translate(-50%, -50%); /* Centra el corazón en el punto del clic */
+    animation: fadeAndRise 1.5s forwards ease-out; /* Animación de desvanecer y subir */
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.4); /* Brillo intenso */
+    z-index: 9999; /* Asegura que esté por encima de todo */
+    opacity: 0; /* Comienza invisible */
+}
+
+@keyframes fadeAndRise {
+    0% {
+        opacity: 0; /* Empieza totalmente transparente */
+        transform: translate(-50%, -50%) scale(0.5); /* Más pequeño al inicio */
+    }
+    10% {
+        opacity: 1; /* Aparece rápidamente */
+        transform: translate(-50%, -60%) scale(1.1); /* Se expande un poco */
+    }
+    80% {
+        opacity: 0.8; /* Se mantiene visible pero empieza a desvanecer */
+        transform: translate(-50%, -200%) scale(0.9); /* Sube y se encoge */
+    }
+    100% {
+        opacity: 0; /* Totalmente transparente al final */
+        transform: translate(-50%, -300%) scale(0.7); /* Termina de subir y encoger */
+    }
 }
