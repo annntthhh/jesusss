@@ -8,9 +8,7 @@
     --text: #e6f1ff;            
     --card-bg: #f8f8f8;         /* Carta casi blanca */
     --card-text: #333333;       
-    --star-color: #ffda8a;      /* AMARILLO/DORADO TENUE */
-    --cloud-color-light: rgba(255, 236, 179, 0.04); /* Color de nubes MUY sutil y luminoso */
-    --cloud-color-dark: rgba(0, 0, 0, 0); /* Nubes casi transparentes */
+    --star-color: #ffda8a;      /* ¡AQUÍ ESTÁ EL COLOR! AMARILLO/DORADO TENUE */
     --heart-click-color: #ff0000; /* Color base para corazones de clic */
 }
 
@@ -20,32 +18,14 @@ html,body{height:100%}
 body{
     margin:0;
     font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif; 
+    background:var(--bg); /* Fondo base */
     color:var(--text);
     display:flex;
     align-items:center;
     justify-content:center;
     padding:32px;
     position:relative; 
-    overflow: hidden; 
-
-    /* === FONDO DE CIELO NOCTURNO CON NUBES === */
-    background-color: var(--bg); /* Color base del cielo profundo */
-    background-image: 
-        /* Capa de nubes 1: Grandes, sutiles y moviéndose lentamente */
-        radial-gradient(ellipse at 10% 20%, var(--cloud-color-light) 0%, var(--cloud-color-dark) 80%),
-        radial-gradient(ellipse at 80% 90%, var(--cloud-color-light) 0%, var(--cloud-color-dark) 70%),
-        radial-gradient(ellipse at 40% 60%, var(--cloud-color-light) 0%, var(--cloud-color-dark) 90%),
-        radial-gradient(ellipse at 60% 30%, var(--cloud-color-light) 0%, var(--cloud-color-dark) 85%);
-    background-size: 800px 600px, 900px 700px, 700px 500px, 1000px 800px; /* Tamaños de las nubes */
-    background-position: 0 0, 50px 100px, 150px -50px, -100px 200px; /* Posiciones iniciales */
-    background-repeat: no-repeat;
-    animation: cloudMove 120s linear infinite alternate; /* ¡NUEVO! Movimiento lento de nubes */
-}
-
-/* Animación de movimiento de nubes */
-@keyframes cloudMove {
-    0% { background-position: 0 0, 50px 100px, 150px -50px, -100px 200px; }
-    100% { background-position: -200px 100px, 150px 0, 50px 150px, 0px 50px; } /* Desplazamiento sutil */
+    overflow: hidden; /* Evita barras de desplazamiento no deseadas */
 }
 
 /* FIRMA "DE ANE" FLOTANTE ARRIBA DEL SOBRE */
@@ -84,60 +64,25 @@ body::before {
     100% { box-shadow: 0 0 220px 85px rgba(255, 236, 179, 0.25) inset; } 
 }
 
-/* CONTENEDOR DE ESTRELLAS DE 4 PUNTAS (Estrellas flotantes) */
-.star-container {
+/* ESTRELLAS / LUCIÉRNAGAS (Puntos circulares que se mueven LENTO) */
+body::after {
+    content: '';
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -2;
-    overflow: hidden;
-    animation: moveStars 60s linear infinite; /* Movimiento LENTO */
+    background: radial-gradient(circle, var(--star-color) 1px, transparent 1.5px) repeat, /* Estrellas pequeñas */
+                radial-gradient(circle, var(--star-color) 0.5px, transparent 1px) repeat; /* Estrellas muy pequeñas */
+    background-size: 150px 150px, 80px 80px; /* Tamaños de repetición */
+    background-position: 0 0, 40px 40px; /* Desplazamiento inicial */
+    animation: starTwinkle 60s linear infinite; /* Movimiento LENTO (60s) */
+    z-index: -2; /* Detrás de todo */
+    opacity: 0.7;
 }
-
-/* Generación de las estrellas con box-shadow para crear la forma de 4 puntas */
-.star-container::before {
-    content: '';
-    position: absolute;
-    width: 2px; /* Tamaño del centro de la estrella */
-    height: 2px;
-    background: transparent;
-    border-radius: 50%; /* Esfera central invisible */
-    
-    /* Generación con una función CSS para una cuadrícula densa de 4 puntas */
-    box-shadow: 
-        /* Genera las estrellas en una cuadrícula (x, y, blur, spread, color) */
-        /* Estrellas en (0,0) y sus 4 puntas */
-        0 0 0 0 var(--star-color), 1px 0 0 0 var(--star-color), -1px 0 0 0 var(--star-color), 0 1px 0 0 var(--star-color), 0 -1px 0 0 var(--star-color),
-        /* Estrellas en (50, 50) y sus 4 puntas */
-        50px 50px 0 0 var(--star-color), 51px 50px 0 0 var(--star-color), 49px 50px 0 0 var(--star-color), 50px 51px 0 0 var(--star-color), 50px 49px 0 0 var(--star-color),
-        /* Estrellas en (100, 100) y sus 4 puntas */
-        100px 100px 0 0 var(--star-color), 101px 100px 0 0 var(--star-color), 99px 100px 0 0 var(--star-color), 100px 101px 0 0 var(--star-color), 100px 99px 0 0 var(--star-color),
-        /* Más estrellas para llenar la pantalla (simulando un cielo) */
-        150px 200px 0 0 var(--star-color), 151px 200px 0 0 var(--star-color), 149px 200px 0 0 var(--star-color), 150px 201px 0 0 var(--star-color), 150px 199px 0 0 var(--star-color),
-        250px 100px 0 0 var(--star-color), 251px 100px 0 0 var(--star-color), 249px 100px 0 0 var(--star-color), 250px 101px 0 0 var(--star-color), 250px 99px 0 0 var(--star-color),
-        350px 300px 0 0 var(--star-color), 351px 300px 0 0 var(--star-color), 349px 300px 0 0 var(--star-color), 350px 301px 0 0 var(--star-color), 350px 299px 0 0 var(--star-color),
-        450px 50px 0 0 var(--star-color), 451px 50px 0 0 var(--star-color), 449px 50px 0 0 var(--star-color), 450px 51px 0 0 var(--star-color), 450px 49px 0 0 var(--star-color),
-        550px 250px 0 0 var(--star-color), 551px 250px 0 0 var(--star-color), 549px 250px 0 0 var(--star-color), 550px 251px 0 0 var(--star-color), 550px 249px 0 0 var(--star-color),
-        650px 400px 0 0 var(--star-color), 651px 400px 0 0 var(--star-color), 649px 400px 0 0 var(--star-color), 650px 401px 0 0 var(--star-color), 650px 399px 0 0 var(--star-color),
-        750px 150px 0 0 var(--star-color), 751px 150px 0 0 var(--star-color), 749px 150px 0 0 var(--star-color), 750px 151px 0 0 var(--star-color), 750px 149px 0 0 var(--star-color),
-        850px 300px 0 0 var(--star-color), 851px 300px 0 0 var(--star-color), 849px 300px 0 0 var(--star-color), 850px 301px 0 0 var(--star-color), 850px 299px 0 0 var(--star-color),
-        950px 450px 0 0 var(--star-color), 951px 450px 0 0 var(--star-color), 949px 450px 0 0 var(--star-color), 950px 451px 0 0 var(--star-color), 950px 449px 0 0 var(--star-color),
-        
-        /* Más allá de la pantalla inicial para el movimiento */
-        1050px 50px 0 0 var(--star-color), 1051px 50px 0 0 var(--star-color), 1049px 50px 0 0 var(--star-color), 1050px 51px 0 0 var(--star-color), 1050px 49px 0 0 var(--star-color),
-        1150px 350px 0 0 var(--star-color), 1151px 350px 0 0 var(--star-color), 1149px 350px 0 0 var(--star-color), 1150px 351px 0 0 var(--star-color), 1150px 349px 0 0 var(--star-color);
-    
-    /* Ajuste de escala para que se vean pequeñas */
-    transform: scale(0.6); 
-    opacity: 0.9; /* Hacemos las estrellas un poco más visibles */
-}
-
-/* Animación de movimiento lento de las estrellas */
-@keyframes moveStars {
-    0% { transform: translate(0, 0) scale(0.6); }
-    100% { transform: translate(150px, 150px) scale(0.6); } /* Movimiento lento en diagonal */
+@keyframes starTwinkle {
+    0% { background-position: 0 0, 40px 40px; }
+    100% { background-position: 150px 150px, 120px 120px; } /* Desplazamiento para el "movimiento" */
 }
 
 
